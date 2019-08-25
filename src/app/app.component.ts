@@ -9,30 +9,11 @@ import { AppService, ListMenu } from './app.service';
 export class AppComponent implements OnInit {
   title = 'smart-mechanical';
 
-  menuList: ListMenu[];
-  userDescription: string;
-
   constructor(private appService: AppService) {
-    this.appService.saveUserProfile();
-    this.userDescription = this.appService.profileDescription();
+    this.appService.isLoggedIn();
   }
 
   ngOnInit() {
-    this.menuList = this.appService.menuList();
-    this.userProfile();  
   }
-
-  getDate(): string {   
-    return this.appService.geDate();
-  }
-  
-  permission(profile: string[]): boolean {
-    return profile.includes(this.userProfile());
-  }
-
-  private userProfile(): string {
-    return this.appService.getUserProfile();
-  }
-
 
 }

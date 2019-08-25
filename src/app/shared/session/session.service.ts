@@ -14,7 +14,8 @@ export class SessionService {
 
   getFromSession() {
     const u = sessionStorage.getItem('user');
-    return this.decrypt(u);
+   
+    return u ? this.decrypt(u) : '';
   }
 
   private decrypt(obj) {

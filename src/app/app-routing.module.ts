@@ -5,9 +5,12 @@ import { ProfileGuardService } from './shared/guards/profile-guard.service';
 
 const routes: Routes = [
   {
-    path: 'os-services',
-    canActivate: [ProfileGuardService],
-    loadChildren: './pages/os-services/os-services.module#OsServicesModule'
+    path: 'admin',
+    loadChildren: './pages/admin/admin.module#AdminModule'
+  },
+  {
+    path: 'login',
+    loadChildren: './pages/login/login.module#LoginModule',
   }
 ];
 
