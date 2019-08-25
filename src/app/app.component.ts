@@ -15,11 +15,11 @@ export class AppComponent {
       'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
     ];
     let week = [
-      'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira',
-      'Sexta-feira', 'Sábado', 'Domingo'
-    ];
+      'Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira',
+      'Quinta-feira', 'Sexta-feira', 'Sábado'
+    ];    
 
-    return `${week[date.getDay() - 1]}, ${date.getDate()} de ${months[date.getMonth()]} de ${date.getUTCFullYear()}`
+    return `${week[date.getDay()]}, ${date.getDate()} de ${months[date.getMonth()]} de ${date.getUTCFullYear()}`
   }
 
 }

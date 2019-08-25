@@ -13,6 +13,7 @@ import { SidebarModule } from 'primeng/sidebar';
     ReactiveFormsModule,
   ],
   exports: [
+    CommonModule,
     SidebarModule,
     HttpClientModule,
     ReactiveFormsModule,

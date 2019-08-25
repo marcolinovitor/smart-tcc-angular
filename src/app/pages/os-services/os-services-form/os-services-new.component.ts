@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OsServicesNewService } from './os-services-new.service';
 import { IVehicles } from './model/vehicles.model';
-
-interface Vehicles {
-  key: string;
-  value: string;
-}
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-os-services-new',
@@ -21,18 +17,45 @@ export class OsServicesNewComponent implements OnInit {
     { name: 'Caminhão', value: 'caminhoes' },
   ];
 
+  private services = [
+    { name: 'Martelinho de Ouro', value: 'mt-ouro' }
+  ];
+
   private vehiclesBrands: IVehicles[] = [];
   private vehiclesName: IVehicles[] = [];
 
-  constructor(private osServicesNew: OsServicesNewService) { }
+  private orcamentoForm: FormGroup;
+
+  constructor(
+    private osServicesNew: OsServicesNewService,
+    private fb: FormBuilder,
+  ) { }
 
   ngOnInit() {
+    this.createForm();
+  }
+
+  createForm() {
+    this.orcamentoForm = this.fb.group({
+      veiculo: [{ value: 'Selecione', disabled: true }, [Validators.required]],
+      cpf: ['', [Validators.required]],
+      nome: ['', [Validators.required]],
+      fone: [''],
+      email: [''],
+      relatado: ['', [Validators.required]],
+      diagnosticado: ['', [Validators.required]],
+      servico: ['Selecione', [Validators.required]],
+      pecas: [''],
+      valor: ['', [Validators.required]]
+    });
   }
 
   getVehicles(tipo: string) {
+    this.vehiclesBrands = [];
+    this.vehiclesName = [];
     this.osServicesNew.getVehicles(tipo)
       .subscribe((result) => {
-          this.vehiclesBrands = result;
+        this.vehiclesBrands = result;
       })
   }
 
@@ -40,6 +63,10 @@ export class OsServicesNewComponent implements OnInit {
     this.osServicesNew.getVehiclesName(marca)
       .subscribe((result) => {
         this.vehiclesName = result;
+      }, (err) => {
+        console.log(err);
+      }, () => {
+        this.orcamentoForm.controls['veiculo'].enable();
       })
   }
 

@@ -4,6 +4,7 @@ import { OsServicesRoutingModule } from './os-services-routing.module';
 import { OsServicesComponent } from './os-services-list/os-services.component';
 import { OsServicesNewComponent } from './os-services-form/os-services-new.component';
 import { OsServicesNewService } from './os-services-form/os-services-new.service';
+import { CoreModule } from 'src/app/core/core.module';
 
 
 
@@ -17,7 +18,7 @@ import { OsServicesNewService } from './os-services-form/os-services-new.service
     OsServicesNewComponent,
   ],
   imports: [
-    CommonModule,
+    CoreModule,
     OsServicesRoutingModule,
   ],
   providers: [
