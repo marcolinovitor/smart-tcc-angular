@@ -10,17 +10,21 @@
                         mechanical
                     </h3>
                     <hr>
-                    <form class="form-signin">
+                    <form [formGroup]="formLogin" class="form-signin">
                         <div class="form-label-group">
                             <label for="login">Login</label>
-                            <input type="text" id="login" class="form-control" placeholder="Informe o login">
+                            <input formControlName="login" type="text" id="login" class="form-control" placeholder="Informe o login">
                         </div>
                         <div class="form-label-group mt-3 mb-4">
                             <label for="senha">Senha</label>
-                            <input type="password" id="senha" class="form-control" placeholder="Informe a senha">
+                            <input formControlName="senha" type="password" id="senha" class="form-control" placeholder="Informe a senha">
                         </div>
 
-                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Acessar</button>
+                        <button 
+                            (click)="login()"
+                            [disabled]="formLogin.invalid"
+                            class="btn btn-lg btn-primary btn-block text-uppercase"
+                            type="submit">Acessar</button>
                         <hr class="my-4">
                     </form>
                 </div>

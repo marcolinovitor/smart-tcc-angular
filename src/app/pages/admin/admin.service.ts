@@ -73,6 +73,13 @@ getUserProfile() {
     return this.sessionService.getFromSession();
 }
 
+welcomeUser() {
+  const hour = new Date().getHours();
+  const good = (hour < 12) ? 'Bom dia' : (hour > 12 && hour < 18) ? 'Boa tarde' : 'Boa noite';
+  
+  return `${good}, ${this.getUserProfile().name}`;
+}
+
 profileDescription(): string {
     return [
         { prof: 'admin', desc: 'Administração' },
