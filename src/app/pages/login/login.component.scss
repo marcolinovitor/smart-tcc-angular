@@ -1,0 +1,26 @@
+.card-signin {
+    border: 0;
+    border-radius: 1rem;
+    box-shadow: 0 0.8rem 1rem 0 rgba(0, 0, 0, 0.8);
+  }
+
+.card-title {
+    font-size: 49px;
+}
+
+.container-fluid {
+    /* The image used */
+  background-image: url("../../../assets/img/menu/workshop-1719872_1920.jpg");
+
+  /* Full height */
+  height: 100%; 
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  .row {
+      height: 100vh;
+  }
+}
