@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ProfileGuardService } from './shared/guards/profile-guard.service';
 
 
 const routes: Routes = [
   {
-    path: 'os-services', loadChildren: './pages/os-services/os-services.module#OsServicesModule'
+    path: 'os-services',
+    canActivate: [ProfileGuardService],
+    loadChildren: './pages/os-services/os-services.module#OsServicesModule'
   }
 ];
 

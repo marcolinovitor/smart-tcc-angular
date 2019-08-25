@@ -6,26 +6,12 @@
         </div>
 
         <ul class="list-unstyled components">
-            <p>Administração</p>
-            <li class="nav-item">
-                <a href="#homeSubmenu" data-toggle="collapse" class="dropdown-toggle">Ordens de Serviço</a>
-                <ul class="collapse list-unstyled" id="homeSubmenu">
-                    <li>
-                        <a routerLink="/os-services">Consultar</a>
-                    </li>
-                    <li>
-                        <a routerLink="/os-services/new">Nova Ordem de Serviço</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a href="#pageSubmenu" data-toggle="collapse" class="dropdown-toggle">Clientes</a>
-                <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li>
-                        <a routerLink="/">Consultar</a>
-                    </li>
-                    <li>
-                        <a routerLink="/">Cadastrar</a>
+            <p>{{ userDescription }}</p>
+            <li *ngFor="let menu of menuList" class="nav-item">
+                <a *ngIf="permission(menu.profile)" href="#{{ menu.href }}" data-toggle="collapse" class="dropdown-toggle">{{ menu.desc }}</a>
+                <ul class="collapse list-unstyled" id="{{ menu.href }}">
+                    <li *ngFor="let sub of menu.subMenu">
+                        <a [routerLink]="sub.path">{{ sub.desc }}</a>
                     </li>
                 </ul>
             </li>

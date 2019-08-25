@@ -1,25 +1,38 @@
 import { Component, OnInit } from '@angular/core';
+import { AppService, ListMenu } from './app.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'smart-mechanical';
 
-  getDate(): string {
-    let date = new Date();
-    let months = [
-      'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
-      'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
-    ];
-    let week = [
-      'Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira',
-      'Quinta-feira', 'Sexta-feira', 'Sábado'
-    ];    
+  menuList: ListMenu[];
+  userDescription: string;
 
-    return `${week[date.getDay()]}, ${date.getDate()} de ${months[date.getMonth()]} de ${date.getUTCFullYear()}`
+  constructor(private appService: AppService) {
+    this.appService.saveUserProfile();
+    this.userDescription = this.appService.profileDescription();
   }
+
+  ngOnInit() {
+    this.menuList = this.appService.menuList();
+    this.userProfile();  
+  }
+
+  getDate(): string {   
+    return this.appService.geDate();
+  }
+  
+  permission(profile: string[]): boolean {
+    return profile.includes(this.userProfile());
+  }
+
+  private userProfile(): string {
+    return this.appService.getUserProfile();
+  }
+
 
 }
