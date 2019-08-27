@@ -24,11 +24,9 @@ export class AppService {
 
     isLoggedIn() {
         const isLogged = !!this.sessionService.getFromSession();
-        if (isLogged) {
-            this.route.navigate(['/admin']);
-        } else {
-            this.route.navigate(['/login']);
-        }
+        console.log(isLogged);
+        
+        isLogged ? this.route.navigate(['admin']) : this.route.navigate(['login']);
     }
 
 }

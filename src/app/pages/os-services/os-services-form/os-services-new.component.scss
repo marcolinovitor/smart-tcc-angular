@@ -1,0 +1,33 @@
+.btn-plus {
+    padding-top: 35px;
+}
+
+.wrapper {
+    .pi.pi-trash {
+        cursor: pointer;
+    }
+}
+
+table {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+}
+
+thead {
+    flex: 0 0 auto;
+}
+
+tbody {
+    flex: 1 1 auto;
+    display: block;
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+tr {
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+}

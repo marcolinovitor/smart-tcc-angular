@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionService {
 
-  constructor() { }
+  constructor(private route: Router) { }
 
   saveOnSession(user) {
     const u = this.encrypt(user);
@@ -16,6 +17,11 @@ export class SessionService {
     const u = sessionStorage.getItem('user');
    
     return u ? this.decrypt(u) : '';
+  }
+
+  logout(route?: string) {
+    sessionStorage.clear();
+    if (route) this.route.navigate([route]);
   }
 
   private decrypt(obj) {

@@ -13,12 +13,15 @@ export class ProfileGuardService implements CanActivate {
   ) { }
 
   canActivate(): boolean {
-    const hasPermission = this.sessionService.getFromSession().profile === 'admin';
-    if (!hasPermission) {
-      this.route.navigate(['/login'])
+    const user = this.sessionService.getFromSession();    
+    if (user && user.profile === 'admin') {
+      return true;
+    } else if (user) {
+      this.route.navigate(['/admin'])
       return false;
     } else {
-      return true;
+      this.route.navigate(['/login'])
+      return false;
     }
   }
 }

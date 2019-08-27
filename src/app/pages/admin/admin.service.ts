@@ -73,6 +73,10 @@ getUserProfile() {
     return this.sessionService.getFromSession();
 }
 
+logout() {
+    this.sessionService.logout('login');
+}
+
 welcomeUser() {
   const hour = new Date().getHours();
   const good = (hour < 12) ? 'Bom dia' : (hour > 12 && hour < 18) ? 'Boa tarde' : 'Boa noite';

@@ -11,9 +11,9 @@
                 </option>
             </select>
         </div>
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-2">
             <label for="marca">Marca do veículo</label>
-            <select (change)="getVehiclesByBrand($event.target.value)" [disabled]="!vehiclesBrands.length" id="marca"
+            <select formControlName="marca" (change)="getVehiclesByBrand($event.target.value)" id="marca"
                 class="form-control">
                 <option selected>Selecione</option>
                 <option *ngFor="let v of vehiclesBrands" [value]="v.id">
@@ -23,18 +23,24 @@
         </div>
         <div class="form-group col-md-6">
             <label for="modelo">Modelo do veículo</label>
-            <select formControlName="veiculo" id="modelo" class="form-control">
+            <select formControlName="modelo" id="modelo" class="form-control">
                 <option selected>Selecione</option>
-                <option *ngFor="let v of vehiclesName" [ngValue]="v.id">
+                <option *ngFor="let v of vehiclesName" [value]="v.id">
                     {{ v.name }}
                 </option>
             </select>
         </div>
+        <div class="form-group col-md-2">
+            <label for="placa">Placa</label>
+            <input formControlName="placa" type="text" class="form-control" id="placa"
+                placeholder="Informe a placa">
+        </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-3">
-            <label for="cpf">CPF do Cliente</label>
-            <input formControlName="cpf" type="text" class="form-control" id="cpf" placeholder="Informe um CPF">
+            <label for="cpfcnpj">CPF / CNPJ do Cliente</label>
+            <input formControlName="cpfcnpj" type="text" class="form-control" id="cpfcnpj"
+                placeholder="Informe o documento">
         </div>
         <div class="form-group col-md-6">
             <label for="nome">Nome do Cliente</label>
@@ -70,35 +76,51 @@
     <div class="form-row">
         <div class="form-group col-md-3">
             <label for="servico">Serviço</label>
-            <select formControlName="servico" id="servico" class="form-control">
+            <select (change)="setValue($event.target.value)" formControlName="servico" id="servico"
+                class="form-control">
                 <option selected>Selecione</option>
-                <option *ngFor="let s of services" [ngValue]="s.value">
-                    {{ s.name }}
+                <option *ngFor="let s of services" [value]="s.id">
+                    {{ s.nome }}
                 </option>
             </select>
         </div>
-        <div class="form-group col-md-5">
-            <label for="pecas">Peças</label>
+        <div class="form-group col-md-6">
+            <label for="pecas">Peças / Serviços</label>
             <input formControlName="pecas" type="text" class="form-control" id="pecas" placeholder="Peças trocadas">
         </div>
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-2">
             <label for="valor">Valor</label>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">R$</span>
-                </div>
-                <input formControlName="valor" type="text" class="form-control" id="valor" placeholder="0,00">
-            </div>
+            <input currencyMask [options]="optCurrency" formControlName="valor" type="text" class="form-control"
+                id="valor">
         </div>
-        <!-- <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="gridCheck">
-            <label class="form-check-label" for="gridCheck">
-                Check me out
-            </label>
-        </div> -->
+        <div class="form-group col-md-1 btn-plus">
+            <p-button (click)="addService(orcamentoForm.value)" id="button" icon="pi pi-plus"></p-button>
+        </div>
+    </div>
+    <div *ngIf="servicesAdded.length" class="wrapper mt-3">
+        <table class="table table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th scope="col">Serviço</th>
+                    <th scope="col">Peças / Serviços</th>
+                    <th scope="col">Valor</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of servicesAdded; let i = index">
+                    <td>{{ serviceName(row.servicoId) }}</td>
+                    <td>{{ row.descricaoServico }}</td>
+                    <td>{{ row.valorServico | currency: 'BRL' }}</td>
+                    <td>
+                        <i (click)="removeItem(i)" class="pi pi-trash"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <hr>
     <div class="text-center">
-        <button [disabled]="orcamentoForm.invalid" type="submit" class="btn btn-primary col-md-2">Salvar OS</button>
+        <button [disabled]="orcamentoForm.invalid" (click)="saveOS(orcamentoForm.value)" type="submit" class="btn btn-primary col-md-2">Salvar OS</button>
     </div>
 </form>
