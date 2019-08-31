@@ -21,6 +21,10 @@ p {
     color: #999;
 }
 
+button:disabled {
+    cursor: no-drop;
+}
+
 a,
 a:hover,
 a:focus {
@@ -60,4 +64,8 @@ a:focus {
     background-color: rgba(0, 0, 0, .5);
     -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
   }
+
+  // regular style toast 
+@import '~ngx-toastr/toastr';
+
 

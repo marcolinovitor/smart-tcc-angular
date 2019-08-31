@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { NgxCurrencyModule } from "ngx-currency";
+import { InputContainerComponent } from '../shared/input-container/input-container.component';
 
 
 @NgModule({
@@ -23,7 +24,10 @@ import { NgxCurrencyModule } from "ngx-currency";
     SidebarModule,
     HttpClientModule,
     ReactiveFormsModule,
+    InputContainerComponent,
   ],
-  declarations: [],
+  declarations: [
+    InputContainerComponent,
+  ],
 })
 export class CoreModule { }

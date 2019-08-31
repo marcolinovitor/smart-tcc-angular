@@ -6,6 +6,7 @@ import { IVehicles } from './model/vehicles.model';
 import { map } from 'rxjs/operators';
 import { Request } from './model/request.interface';
 import { OrcamentoForm, Servico } from './model/orcamento-form.model';
+import { IOrcamentoForm } from './model/orcamento-form.interface';
 
 export interface Services {
     id?: number;
@@ -60,10 +61,10 @@ export class OsServicesNewService {
 
     }
 
-    saveOsService<T>(form: OrcamentoForm): Observable<T> {
+    saveOsService(form: OrcamentoForm): Observable<OsResponse> {       
         const url = `${this.urlApi}/ordemServico`
         const request = this.createRequest(form);
-        return this.http.post<T>(url, request);
+        return this.http.post<OsResponse>(url, request);
     }
 
     private createRequest(form: OrcamentoForm): Request {
@@ -80,7 +81,7 @@ export class OsServicesNewService {
                     CpfCnpj: form.carro.cliente.cpfCnpj,
                     Telefone: form.carro.cliente.telefone,
                     Email: form.carro.cliente.email,
-                    PerfilSistema: 'client',
+                    PerfilSistema: form.carro.cliente.perfilSistema,
                 }
             },
             Servicos: form.servico,

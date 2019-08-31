@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { OsServicesNewService } from './os-services-new.service';
+import { OsServicesNewService, Services } from './os-services-new.service';
 import { IVehicles } from './model/vehicles.model';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { OrcamentoForm } from './model/orcamento-form.model';
+import { utils } from 'src/app/shared/utils/utils';
+import { IOrcamentoForm } from './model/orcamento-form.interface';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-os-services-new',
@@ -18,7 +21,13 @@ export class OsServicesNewComponent implements OnInit {
     { name: 'Caminhão', value: 'caminhoes' },
   ];
 
-  private services = [];
+  private services: Services[] = [{
+    id: 99,
+    nome: 'Outros',
+    valor: 0,
+  }];
+  private regexMail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+  private regexPlaca = new RegExp('^[a-zA-Z]{3}[0-9]{4}$');
 
   private vehiclesBrands: IVehicles[] = [];
   private vehiclesName: IVehicles[] = [];
@@ -38,10 +47,13 @@ export class OsServicesNewComponent implements OnInit {
   };
 
   private orcamentoForm: FormGroup;
+  submitting: boolean;
+  newService: boolean;
 
   constructor(
     private osServicesNew: OsServicesNewService,
     private fb: FormBuilder,
+    private toastr: ToastrService,
   ) {
     this.listServices();
   }
@@ -52,22 +64,22 @@ export class OsServicesNewComponent implements OnInit {
 
   listServices() {
     this.osServicesNew.getServices()
-      .subscribe(res => this.services = res);
+      .subscribe(res => this.services.concat(res));
   }
 
   createForm() {
     this.orcamentoForm = this.fb.group({
-      marca: [{ value: 'Selecione', disabled: true }, [Validators.required]],
-      modelo: [{ value: 'Selecione', disabled: true }, [Validators.required]],
-      placa: ['', [Validators.required, Validators.maxLength(7)]],
-      cpfcnpj: ['', [Validators.required]],
+      marca: ['', [Validators.required]],
+      modelo: ['', [Validators.required]],
+      placa: ['', [Validators.required, Validators.pattern(this.regexPlaca), Validators.minLength(7), Validators.maxLength(7)]],
+      cpfcnpj: ['', [Validators.required, this.documentDomainValidator]],
       nome: ['', [Validators.required]],
-      fone: [''],
-      email: [''],
-      relatado: ['', [Validators.required]],
-      diagnosticado: ['', [Validators.required]],
-      servico: ['Selecione', [Validators.required]],
-      pecas: [''],
+      fone: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
+      email: ['', [Validators.required, Validators.pattern(this.regexMail)]],
+      relatado: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500)]],
+      diagnosticado: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500)]],
+      servico: ['', [Validators.required]],
+      pecas: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30)]],
       valor: ['', [Validators.required]]
     });
   }
@@ -96,17 +108,17 @@ export class OsServicesNewComponent implements OnInit {
       })
   }
 
-  addService(form) {    
+  addService(form) {
     const s = {
-      servicoId: form.servico,
-      descricaoServico: form.pecas,
-      valorServico: form.valor,
+      ServicoId: form.servico,
+      DescricaoServico: form.pecas,
+      ValorServico: form.valor,
     };
     this.servicesAdded.push(s);
-    console.log(this.services);
-    
-    console.log(this.servicesAdded);
-    
+  }
+
+  hasServices(form: IOrcamentoForm): boolean {
+    return !!(form.servico && form.valor && form.pecas);
   }
 
   serviceName(id): string {
@@ -117,29 +129,50 @@ export class OsServicesNewComponent implements OnInit {
     this.servicesAdded.splice(index, 1);
   }
 
-  setValue(id: string) {   
-    const valor = this.services.find(f => f.id == id).valor;
+  setValue(id: string) {
+    this.newService = id === '99';
+    console.log(id);
+    console.log(this.services);
+    
+    const valor = this.services.find(f => f.id == parseInt(id)).valor;
     this.orcamentoForm.controls['valor'].patchValue(valor);
   }
 
-  saveOS(form) {
-    console.log(form);
-    const os = new OrcamentoForm();
-    os.diagnosticado = form.diagnosticado;
-    os.relatado = form.relatado;
-    os.carro.cliente.nome = form.nome;
-    os.carro.cliente.cpfCnpj = form.cpfCnpj;
-    os.carro.cliente.email = form.email;
-    os.carro.cliente.telefone = form.fone;
-    os.carro.marca = this.vehiclesBrands.find(f => f.id == form.marca).name;
-    os.carro.modelo = this.vehiclesName.find(f => f.id == form.modelo).name;
-    os.carro.placa = form.placa;
-    os.servico = this.servicesAdded;
-
-    this.osServicesNew.saveOsService(os)
+  saveOS(form: IOrcamentoForm) {
+    this.submitting = true;
+    const order = new OrcamentoForm(form, this.servicesAdded);
+    this.osServicesNew.saveOsService(order)
       .subscribe((res) => {
-        console.log(res);
-      })
+        if (res.referencia) {
+          this.toastr.success(`Número da OS: ${res.referencia}`, 'Sucesso');
+        }
+      }, (err) => {
+        this.toastr.error(`Parece que houve um erro ... `, 'Ops');
+      }, () => {
+        this.orcamentoForm.reset();
+        this.submitting = false;
+      });
+  }
+
+
+  private isValid(input: string): boolean {
+    const field = this.orcamentoForm.controls[input];
+    return field.valid && (field.touched || field.dirty);
+  }
+
+  private isInvalid(input: string): boolean {
+    const field = this.orcamentoForm.controls[input];
+    return field.invalid && (field.touched || field.dirty);
+  }
+
+  private fieldLen(f: string): number {
+    return this.orcamentoForm.controls[f].value.length;
+  }
+
+
+  private documentDomainValidator(control: FormControl) {
+    return utils.validateDocument(control.value) ?
+      { docInvalid: true } : null;
   }
 
 }

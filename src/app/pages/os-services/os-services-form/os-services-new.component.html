@@ -2,6 +2,36 @@
 <hr>
 <form [formGroup]="orcamentoForm">
     <div class="form-row">
+        <div class="form-group col-md-3">
+            <app-input-container errorMessage="Documento inválido" label="CPF / CNPJ do Cliente">
+                <input [ngClass]="{'is-valid': isValid('cpfcnpj'), 'is-invalid': isInvalid('cpfcnpj')}"
+                    formControlName="cpfcnpj" type="text" class="form-control" id="cpfcnpj"
+                    placeholder="Informe o documento">
+            </app-input-container>
+        </div>
+        <div class="form-group col-md-6">
+            <app-input-container errorMessage="Informe um nome válido" label="Nome do Cliente">
+                <input [ngClass]="{'is-valid': isValid('nome'), 'is-invalid': isInvalid('nome')}" formControlName="nome"
+                    type="text" class="form-control" id="nome" placeholder="Informe o nome do cliente">
+            </app-input-container>
+        </div>
+        <div class="form-group col-md-3">
+            <app-input-container errorMessage="Informe um telefone válido" label="Telefone">
+                <input [ngClass]="{'is-valid': isValid('fone'), 'is-invalid': isInvalid('fone')}" formControlName="fone"
+                    type="text" class="form-control" id="fone" placeholder="(00) 00000-0000">
+            </app-input-container>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <app-input-container errorMessage="Informe um email válido" label="Email">
+                <input [ngClass]="{'is-valid': isValid('email'), 'is-invalid': isInvalid('email')}"
+                    formControlName="email" type="text" class="form-control" id="email" placeholder="Informe um email">
+            </app-input-container>
+        </div>
+    </div>
+    <hr>
+    <div class="form-row">
         <div class="form-group col-md-2">
             <label for="tipo">Tipo do veículo</label>
             <select (change)="getVehicles($event.target.value)" id="tipo" class="form-control">
@@ -31,46 +61,29 @@
             </select>
         </div>
         <div class="form-group col-md-2">
-            <label for="placa">Placa</label>
-            <input formControlName="placa" type="text" class="form-control" id="placa"
-                placeholder="Informe a placa">
+            <app-input-container errorMessage="Informe uma placa válida" label="Placa">
+                <input [ngClass]="{'is-valid': isValid('placa'), 'is-invalid': isInvalid('placa')}"
+                    formControlName="placa" type="text" class="form-control" id="placa" placeholder="Informe a placa">
+            </app-input-container>
         </div>
     </div>
-    <div class="form-row">
-        <div class="form-group col-md-3">
-            <label for="cpfcnpj">CPF / CNPJ do Cliente</label>
-            <input formControlName="cpfcnpj" type="text" class="form-control" id="cpfcnpj"
-                placeholder="Informe o documento">
-        </div>
-        <div class="form-group col-md-6">
-            <label for="nome">Nome do Cliente</label>
-            <input formControlName="nome" type="text" class="form-control" id="nome"
-                placeholder="Informe o nome do cliente">
-        </div>
-        <div class="form-group col-md-3">
-            <label for="fone">Telefone</label>
-            <input formControlName="fone" type="text" class="form-control" id="fone" placeholder="(00) 00000-0000">
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-4">
-            <label for="email">Email</label>
-            <input formControlName="email" type="text" class="form-control" id="email" placeholder="Informe um email">
-        </div>
-    </div>
-    <hr>
+
     <div class="form-row">
         <div class="form-group col-6">
-            <label for="relatado">Problema Relatado</label>
-            <textarea formControlName="relatado" style="resize: none" class="form-control" id="relatado"
-                rows="3"></textarea>
-            <small class="form-text text-muted float-right mt-2">0/500</small>
+            <app-input-container errorMessage="Problema deve ser relatado" label="Problema Relatado">
+                <textarea [ngClass]="{'is-valid': isValid('relatado'), 'is-invalid': isInvalid('relatado')}"
+                    formControlName="relatado" style="resize: none" class="form-control" id="relatado"
+                    rows="3"></textarea>
+                <small class="form-text text-muted float-right mt-2">{{ fieldLen('relatado') }} / 500</small>
+            </app-input-container>
         </div>
         <div class="form-group col-6">
-            <label for="diagnosticado">Problema Diagnosticado</label>
-            <textarea formControlName="diagnosticado" style="resize: none" class="form-control" id="diagnosticado"
-                rows="3"></textarea>
-            <small class="form-text text-muted float-right mt-2">0/500</small>
+            <app-input-container errorMessage="Informe o problema diagnosticado" label="Problema Diagnosticado">
+                <textarea [ngClass]="{'is-valid': isValid('diagnosticado'), 'is-invalid': isInvalid('diagnosticado')}"
+                    formControlName="diagnosticado" style="resize: none" class="form-control" id="diagnosticado"
+                    rows="3"></textarea>
+                <small class="form-text text-muted float-right mt-2">{{ fieldLen('diagnosticado') }} / 500</small>
+            </app-input-container>
         </div>
     </div>
     <div class="form-row">
@@ -84,17 +97,29 @@
                 </option>
             </select>
         </div>
-        <div class="form-group col-md-6">
-            <label for="pecas">Peças / Serviços</label>
-            <input formControlName="pecas" type="text" class="form-control" id="pecas" placeholder="Peças trocadas">
+        <div *ngIf="newService" class="form-group col-md-3">
+            <app-input-container errorMessage="Informe um novo serviço" label="Outros">
+                <input [ngClass]="{'is-valid': isValid('pecas'), 'is-invalid': isInvalid('pecas')}"
+                    formControlName="servico" type="text" class="form-control" placeholder="Peças trocadas">
+            </app-input-container>
+        </div>
+        <div [ngClass]="{'col-md-6': !newService, 'col-md-3': newService}" class="form-group">
+            <app-input-container errorMessage="Informe as peças e/ou serviços" label="Peças / Serviços">
+                <input [ngClass]="{'is-valid': isValid('pecas'), 'is-invalid': isInvalid('pecas')}"
+                    formControlName="pecas" type="text" class="form-control" id="pecas" placeholder="Peças trocadas">
+            </app-input-container>
         </div>
         <div class="form-group col-md-2">
-            <label for="valor">Valor</label>
-            <input currencyMask [options]="optCurrency" formControlName="valor" type="text" class="form-control"
-                id="valor">
+            <app-input-container errorMessage="O Valor não deve ser de R$ 0,00" label="Valor">
+                <input [ngClass]="{'is-valid': isValid('valor'), 'is-invalid': isInvalid('valor')}" currencyMask
+                    [options]="optCurrency" formControlName="valor" type="text" class="form-control" id="valor">
+            </app-input-container>
         </div>
         <div class="form-group col-md-1 btn-plus">
-            <p-button (click)="addService(orcamentoForm.value)" id="button" icon="pi pi-plus"></p-button>
+            <button (click)="addService(orcamentoForm.value)" [disabled]="!hasServices(orcamentoForm.value)"
+                type="button" class="btn btn-primary btn-icon">
+                <i class="pi pi-plus"></i>
+            </button>
         </div>
     </div>
     <div *ngIf="servicesAdded.length" class="wrapper mt-3">
@@ -109,9 +134,9 @@
             </thead>
             <tbody>
                 <tr *ngFor="let row of servicesAdded; let i = index">
-                    <td>{{ serviceName(row.servicoId) }}</td>
-                    <td>{{ row.descricaoServico }}</td>
-                    <td>{{ row.valorServico | currency: 'BRL' }}</td>
+                    <td>{{ serviceName(row.ServicoId) }}</td>
+                    <td>{{ row.DescricaoServico }}</td>
+                    <td>{{ row.ValorServico | currency: 'BRL' }}</td>
                     <td>
                         <i (click)="removeItem(i)" class="pi pi-trash"></i>
                     </td>
@@ -120,7 +145,11 @@
         </table>
     </div>
     <hr>
-    <div class="text-center">
-        <button [disabled]="orcamentoForm.invalid" (click)="saveOS(orcamentoForm.value)" type="submit" class="btn btn-primary col-md-2">Salvar OS</button>
+    <div class="btn-row">
+        <button [disabled]="orcamentoForm.invalid || !servicesAdded.length" (click)="saveOS(orcamentoForm.value)"
+            type="submit" class="btn btn-primary col-md-2">
+            <span *ngIf="submitting" class="spinner-border spinner-border-sm" role="status"></span>
+            {{ submitting ? 'Aguarde ...' : 'Salvar OS' }}
+        </button>
     </div>
 </form>

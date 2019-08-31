@@ -31,3 +31,26 @@ tr {
     display: table;
     table-layout: fixed;
 }
+
+input#place {
+    text-transform: uppercase;
+}
+
+.icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    display: block;
+}
+
+.btn-row {
+    justify-content: center;
+}
+
+.btn-icon {
+    padding-bottom: 0;
+}

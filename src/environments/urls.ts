@@ -3,6 +3,6 @@ export const urls = {
         api: 'http://fipeapi.appspot.com/api/1/',
     },
     smart: {
-        api: 'http://192.168.0.114:80/api',
+        api: 'http://fatecoficinaapi.azurewebsites.net/api',
     }
 };

@@ -4,17 +4,12 @@ export interface Request {
   ProblemaDescrito: string;
   Carro: Carro;
   Servicos: Servico[];
-  
-
-//   constructor(form) {
-
-//   }
 }
 
 export interface Servico {
-  servicoId: number;
-  descricaoServico: string;
-  valorServico: number;
+  ServicoId: number;
+  DescricaoServico: string;
+  ValorServico: number;
 }
 
 export interface Carro {
