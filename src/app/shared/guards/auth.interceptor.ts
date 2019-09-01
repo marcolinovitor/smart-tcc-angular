@@ -9,15 +9,19 @@ export class AuthInterceptor implements HttpInterceptor {
         private session: SessionService,
     ) {}
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {       
-        const token = this.session.getFromSession().token;
-        if (token) {
-            request = request.clone({
-                headers: request.headers.set(
-                    'Authorization', `Bearer ${token}`
-                )
-            })
-        }
-        return next.handle(request);
+    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        if (request.url.endsWith('/api/autenticar')) {
+            return next.handle(request);
+        } else {
+            const token = this.session.getFromSession().token;
+            if (token) {
+                request = request.clone({
+                    headers: request.headers.set(
+                        'Authorization', `Bearer ${token}`
+                    )
+                })
+            }
+            return next.handle(request);
+        }       
     }
 }

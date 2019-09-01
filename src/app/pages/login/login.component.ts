@@ -12,7 +12,8 @@ import { LoginService } from './login.service';
 export class LoginComponent implements OnInit {
 
   formLogin: FormGroup;
-  notAuthorized: boolean;
+  errorMessage: string;
+  submitting: boolean;
 
   constructor(
     private loginService: LoginService,
@@ -30,11 +31,19 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.submitting = true;
     this.loginService.login(this.formLogin.value)
       .subscribe((res) => {
 
-      }, (err) => {      
-        this.notAuthorized = err.status === 401;
+      }, (err) => {       
+        if (err === 'Not Found') {
+          this.errorMessage = 'Usuário e/ou senha incorretos.';
+        } else {
+          this.errorMessage = 'Ops, houve um erro interno ...';
+        }
+        this.submitting = false;
+      }, () => {
+        this.submitting = false;
       });
   }
 

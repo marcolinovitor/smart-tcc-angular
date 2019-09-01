@@ -10,6 +10,7 @@ import { CoreModule } from './core/core.module';
 import { AppService } from './app.service';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './shared/guards/auth.interceptor';
+import { ErrorInterceptor } from './shared/guards/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { AuthInterceptor } from './shared/guards/auth.interceptor';
   ],
   providers: [
     AppService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

@@ -9,10 +9,10 @@
                     <h3 class="card-subtitle text-center mb-2 text-muted">
                         mechanical
                     </h3>
-                    <div *ngIf="notAuthorized" class="alert alert-danger" role="alert">
-                        Usuário ou senha incorretos!
-                    </div>
                     <hr>
+                    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+                        {{ errorMessage }}
+                    </div>
                     <form [formGroup]="formLogin" class="form-signin">
                         <div class="form-label-group">
                             <label for="login">Login</label>
@@ -26,7 +26,13 @@
                         </div>
 
                         <button (click)="login()" [disabled]="formLogin.invalid"
-                            class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Acessar</button>
+                            class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">
+                            <div *ngIf="submitting" class="d-flex align-items-center">
+                                <span>Acessando ...</span>
+                                <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+                            </div>
+                            {{ submitting ? '' : 'Acessar' }}
+                        </button>
                         <hr class="my-4">
                     </form>
                 </div>
