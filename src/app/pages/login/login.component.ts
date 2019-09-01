@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { SessionService } from 'src/app/shared/session/session.service';
 import { Router } from '@angular/router';
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'app-login',
@@ -11,10 +12,10 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   formLogin: FormGroup;
+  notAuthorized: boolean;
 
   constructor(
-    private sessionService: SessionService,
-    private route: Router
+    private loginService: LoginService,
   ) { }
 
   ngOnInit() {
@@ -23,19 +24,18 @@ export class LoginComponent implements OnInit {
 
   createForm() {
     this.formLogin = new FormGroup({
-      login: new FormControl('', [Validators.required]),
-      senha: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required]),
+      senha: new FormControl('', [Validators.required])
     })
   }
 
   login() {
-    const item = {
-      name: this.formLogin.value.login,
-      profile: this.formLogin.value.senha,
-      email: 'marcolino.vitor@gmail.com'
-    }
-    this.sessionService.saveOnSession(item);
-    this.route.navigate(['admin']);
+    this.loginService.login(this.formLogin.value)
+      .subscribe((res) => {
+
+      }, (err) => {      
+        this.notAuthorized = err.status === 401;
+      });
   }
 
 }

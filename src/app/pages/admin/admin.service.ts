@@ -26,7 +26,7 @@ menuList(): ListMenu[] {
     return [
         {
             desc: 'Ordens de Serviço',
-            profile: ['admin'],
+            profile: ['Mecanico'],
             href: 'osSubMenu',
             subMenu: [
                 { desc: 'Consultar', path: 'os-services' },
@@ -36,7 +36,7 @@ menuList(): ListMenu[] {
         {
             desc: 'Clientes',
             href: 'clientSubMenu',
-            profile: ['admin', 'compras'],
+            profile: ['Mecanico', 'compras'],
             subMenu: [
                 { desc: 'Consultar', path: 'clientes' },
                 { desc: 'Cadastrar Cliente', path: 'clientes/new' },
@@ -81,13 +81,13 @@ welcomeUser() {
   const hour = new Date().getHours();
   const good = (hour < 12) ? 'Bom dia' : (hour > 12 && hour < 18) ? 'Boa tarde' : 'Boa noite';
   
-  return `${good}, ${this.getUserProfile().name}`;
+  return `${good}, ${this.getUserProfile().authenticatedUser}`;
 }
 
 profileDescription(): string {
     return [
-        { prof: 'admin', desc: 'Administração' },
+        { prof: 'Mecanico', desc: 'Administração' },
         { prof: 'compras', desc: 'Orçamentos' },
-    ].find((f) => f.prof === this.getUserProfile().profile).desc;
+    ].find((f) => f.prof === this.getUserProfile().authenticatedRole).desc;
 }
 }

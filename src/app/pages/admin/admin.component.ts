@@ -37,7 +37,7 @@ export class AdminComponent implements OnInit {
   }
 
   userProfile(): string {
-    return this.adminService.getUserProfile().profile;
+    return this.adminService.getUserProfile().authenticatedRole;
   }
 
 }

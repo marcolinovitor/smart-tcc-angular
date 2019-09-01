@@ -14,7 +14,7 @@ export class ProfileGuardService implements CanActivate {
 
   canActivate(): boolean {
     const user = this.sessionService.getFromSession();    
-    if (user && user.profile === 'admin') {
+    if (user && user.authenticatedRole === 'Mecanico') {
       return true;
     } else if (user) {
       this.route.navigate(['/admin'])

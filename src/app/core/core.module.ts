@@ -13,7 +13,6 @@ import { InputContainerComponent } from '../shared/input-container/input-contain
     ButtonModule,
     CommonModule,
     SidebarModule,
-    HttpClientModule,
     ReactiveFormsModule,
     NgxCurrencyModule
   ],
@@ -22,7 +21,6 @@ import { InputContainerComponent } from '../shared/input-container/input-contain
     ButtonModule,
     CommonModule,
     SidebarModule,
-    HttpClientModule,
     ReactiveFormsModule,
     InputContainerComponent,
   ],

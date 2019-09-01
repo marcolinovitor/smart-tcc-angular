@@ -5,9 +5,7 @@ import { Observable } from 'rxjs';
 import { SessionService } from 'src/app/shared/session/session.service';
 import { map } from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class OsServicesService {
 
   private url = urls.smart.api;
@@ -36,10 +34,10 @@ export class OsServicesService {
   }
 
   isAdmin(): boolean {
-    return this.sessionService.getFromSession().profile === 'admin';
+    return this.sessionService.getFromSession().authenticatedRole === 'Mecanico';
   }
 
   userEmail(): string {
-    return this.sessionService.getFromSession().email;
+    return this.sessionService.getFromSession().authenticatedUser;
   }
 }
