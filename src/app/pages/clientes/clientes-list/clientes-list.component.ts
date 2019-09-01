@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientesListService } from './clientes-list.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-clientes-list',
@@ -10,9 +12,11 @@ export class ClientesListComponent implements OnInit {
 
   private clientes: ClienteResponse[] = [];
   edit = false;
+  error: boolean;
 
   constructor(
-    private clienteListService: ClientesListService
+    private clienteListService: ClientesListService,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit() {
@@ -24,6 +28,10 @@ export class ClientesListComponent implements OnInit {
       .subscribe((res) => {
         this.clientes = res;
         this.clientes.map((c) => c.editable = false); 
+        this.error = false;
+      }, (err: HttpErrorResponse) => {
+        this.toastr.error(err.message, 'Ops!');
+        this.error = true;
       });
   }
 

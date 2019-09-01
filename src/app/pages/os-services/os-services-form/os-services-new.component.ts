@@ -64,7 +64,9 @@ export class OsServicesNewComponent implements OnInit {
 
   listServices() {
     this.osServicesNew.getServices()
-      .subscribe(res => this.services.concat(res));
+      .subscribe(res => {
+        this.services = this.services.concat(res);       
+      });
   }
 
   createForm() {
@@ -131,9 +133,7 @@ export class OsServicesNewComponent implements OnInit {
 
   setValue(id: string) {
     this.newService = id === '99';
-    console.log(id);
-    console.log(this.services);
-    
+  
     const valor = this.services.find(f => f.id == parseInt(id)).valor;
     this.orcamentoForm.controls['valor'].patchValue(valor);
   }
@@ -149,7 +149,7 @@ export class OsServicesNewComponent implements OnInit {
       }, (err) => {
         this.toastr.error(`Parece que houve um erro ... `, 'Ops');
       }, () => {
-        this.orcamentoForm.reset();
+        this.orcamentoForm.reset('');
         this.submitting = false;
       });
   }
