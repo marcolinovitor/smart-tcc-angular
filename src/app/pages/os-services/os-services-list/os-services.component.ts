@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { OsServicesService } from './os-services.service';
 
 @Component({
   selector: 'app-os-services',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OsServicesComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private osServices: OsServicesService,
+  ) { }
 
   ngOnInit() {
+    this.getAllOrders();
+  }
+
+  getAllOrders() {
+    this.osServices.getAllOrders()
+      .subscribe((res) => {
+        console.log(res);
+      })
   }
 
 }

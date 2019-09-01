@@ -5,6 +5,7 @@ import { OsServicesComponent } from './os-services-list/os-services.component';
 import { OsServicesNewComponent } from './os-services-form/os-services-new.component';
 import { OsServicesNewService } from './os-services-form/os-services-new.service';
 import { CoreModule } from 'src/app/core/core.module';
+import { OsServicesService } from './os-services-list/os-services.service';
 
 
 
@@ -23,6 +24,7 @@ import { CoreModule } from 'src/app/core/core.module';
   ],
   providers: [
     OsServicesNewService,
+    OsServicesService,
   ]
 })
 export class OsServicesModule { }

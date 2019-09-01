@@ -1,0 +1,69 @@
+<div *ngIf="!clientes.length" class="d-flex justify-content-center">
+    <div class="spinner-border" role="status"></div>
+</div>
+<div *ngIf="clientes.length" class="wrapper">
+    <h2>
+        <strong>
+            Lista de Clientes
+        </strong>
+    </h2>
+    <table class="table table-striped table-responsive-md">
+        <thead>
+            <tr>
+                <th scope="col">CPF</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Email</th>
+                <th scope="col">Telefone</th>
+                <th scope="col">Alterar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let cliente of clientes; let i = index">
+                <td width="20%">
+                    <span *ngIf="cliente.editable; else doc">
+                        <input [disabled]="true" class="form-control" type="text" [(ngModel)]="cliente.cpfCnpj">
+                    </span>
+                    <ng-template #doc>
+                        {{ cliente.cpfCnpj }}
+                    </ng-template>
+                </td>
+                <td width="20%">
+                    <span *ngIf="cliente.editable; else name">
+                        <input class="form-control" type="text" [(ngModel)]="cliente.nome">
+                    </span>
+                    <ng-template #name>
+                        {{ cliente.nome }}
+                    </ng-template>
+                </td>
+                <td width="20%">
+                    <span *ngIf="cliente.editable; else email">
+                        <input class="form-control" type="text" [(ngModel)]="cliente.email">
+                    </span>
+                    <ng-template #email>
+                        {{ cliente.email }}
+                    </ng-template>
+                </td>
+                <td width="20%">
+                    <span *ngIf="cliente.editable; else telefone">
+                        <input class="form-control" type="text" [(ngModel)]="cliente.telefone">
+                    </span>
+                    <ng-template #telefone>
+                        {{ cliente.telefone }}
+                    </ng-template>
+                </td>
+                <td>
+                    <a class="editable" (click)="editMode(cliente, i)">
+                        <i class="pi" [ngClass]="{
+                                'pi-pencil': !cliente.editable,
+                                'pi-save': cliente.editable
+                            }"></i>
+                    </a>
+                    &nbsp; | &nbsp;
+                    <a class="editable" (click)="removeItem(i)">
+                        <i class="pi pi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

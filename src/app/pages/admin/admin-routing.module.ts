@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { ProfileGuardService } from 'src/app/shared/guards/profile-guard.service';
 import { OsServicesModule } from '../os-services/os-services.module';
+import { ClientesModule } from '../clientes/clientes.module';
 
 
 const routes: Routes = [
@@ -14,6 +15,10 @@ const routes: Routes = [
         path: 'os-services',
         canActivate: [ProfileGuardService],
         loadChildren: () => OsServicesModule
+      },
+      {
+        path: 'clientes',
+        loadChildren: () => ClientesModule
       }
     ]
   },
