@@ -24,12 +24,12 @@ export class SessionService {
     if (route) this.route.navigate([route]);
   }
 
-  private decrypt(obj) {
+  decrypt(obj) {
     const decrypted = atob(obj);
     return JSON.parse(decrypted);
   }
 
-  private encrypt(obj) {
+  encrypt(obj) {
     const json = JSON.stringify(obj);    
     return btoa(json);
   }

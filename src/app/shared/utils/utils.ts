@@ -14,7 +14,7 @@ export class Utils {
     }
 
 
-    private validateCpf(cpf: string): boolean {
+    validateCpf(cpf: string): boolean {
         if (!cpf || cpf.length != 11 || cpfInvalids.includes(cpf)) return true;
         let soma = 0;
         let resto;
@@ -34,7 +34,7 @@ export class Utils {
         return false;
     }
 
-    private validateCnpj(cnpj: string): boolean {
+    validateCnpj(cnpj: string): boolean {
         if (!cnpj || cnpj.length != 14 || cnpjInvalids.includes(cnpj)) return true;
         let tamanho = cnpj.length - 2
         let numeros = cnpj.substring(0, tamanho)

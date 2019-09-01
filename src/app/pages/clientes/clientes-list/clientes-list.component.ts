@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ClientesListComponent implements OnInit {
 
-  private clientes: ClienteResponse[] = [];
+  clientes: ClienteResponse[] = [];
   edit = false;
   error: boolean;
 

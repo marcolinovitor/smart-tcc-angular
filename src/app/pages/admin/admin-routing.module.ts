@@ -14,11 +14,11 @@ const routes: Routes = [
       {
         path: 'os-services',
         canActivate: [ProfileGuardService],
-        loadChildren: () => OsServicesModule
+        loadChildren: '../os-services/os-services.module#OsServicesModule'
       },
       {
         path: 'clientes',
-        loadChildren: () => ClientesModule
+        loadChildren: '../clientes/clientes.module#ClientesModule'
       }
     ]
   },

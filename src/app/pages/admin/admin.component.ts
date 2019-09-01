@@ -28,15 +28,15 @@ export class AdminComponent implements OnInit {
     return profile.includes(this.userProfile());
   }
 
-  private logout() {
+  logout() {
     this.adminService.logout();
   }
 
-  private userInformations() {
+  userInformations() {
     return this.adminService.welcomeUser();
   }
 
-  private userProfile(): string {
+  userProfile(): string {
     return this.adminService.getUserProfile().profile;
   }
 

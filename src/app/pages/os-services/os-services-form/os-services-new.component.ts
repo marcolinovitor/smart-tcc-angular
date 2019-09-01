@@ -15,22 +15,22 @@ import { ToastrService } from 'ngx-toastr';
 
 export class OsServicesNewComponent implements OnInit {
 
-  private tipos: IVehicles[] = [
+  tipos: IVehicles[] = [
     { name: 'Carro', value: 'carros' },
     { name: 'Moto', value: 'motos' },
     { name: 'Caminhão', value: 'caminhoes' },
   ];
 
-  private services: Services[] = [{
+  services: Services[] = [{
     id: 99,
     nome: 'Outros',
     valor: 0,
   }];
-  private regexMail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
-  private regexPlaca = new RegExp('^[a-zA-Z]{3}[0-9]{4}$');
+  regexMail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+  regexPlaca = new RegExp('^[a-zA-Z]{3}[0-9]{4}$');
 
-  private vehiclesBrands: IVehicles[] = [];
-  private vehiclesName: IVehicles[] = [];
+  vehiclesBrands: IVehicles[] = [];
+  vehiclesName: IVehicles[] = [];
 
   servicesAdded = [];
 
@@ -46,7 +46,7 @@ export class OsServicesNewComponent implements OnInit {
     nullable: true
   };
 
-  private orcamentoForm: FormGroup;
+  orcamentoForm: FormGroup;
   submitting: boolean;
   newService: boolean;
 
@@ -155,22 +155,22 @@ export class OsServicesNewComponent implements OnInit {
   }
 
 
-  private isValid(input: string): boolean {
+  isValid(input: string): boolean {
     const field = this.orcamentoForm.controls[input];
     return field.valid && (field.touched || field.dirty);
   }
 
-  private isInvalid(input: string): boolean {
+  isInvalid(input: string): boolean {
     const field = this.orcamentoForm.controls[input];
     return field.invalid && (field.touched || field.dirty);
   }
 
-  private fieldLen(f: string): number {
+  fieldLen(f: string): number {
     return this.orcamentoForm.controls[f].value.length;
   }
 
 
-  private documentDomainValidator(control: FormControl) {
+  documentDomainValidator(control: FormControl) {
     return utils.validateDocument(control.value) ?
       { docInvalid: true } : null;
   }
