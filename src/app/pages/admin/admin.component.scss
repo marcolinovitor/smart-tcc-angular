@@ -45,7 +45,7 @@
 }
 
 #sidebar ul li a:hover {
-    color: #7386D5;
+    color: #7386D5 !important;
     background: #fff;
 }
 
@@ -73,28 +73,28 @@ ul ul a {
     background: #6d7fcc;
 }
 
-ul.CTAs {
-    padding: 20px;
-}
+// ul.CTAs {
+//     padding: 20px;
+// }
 
-ul.CTAs a {
-    text-align: center;
-    font-size: 0.9em !important;
-    display: block;
-    border-radius: 5px;
-    margin-bottom: 5px;
-}
+// ul.CTAs a {
+//     text-align: center;
+//     font-size: 0.9em !important;
+//     display: block;
+//     border-radius: 5px;
+//     margin-bottom: 5px;
+// }
 
-a.download {
-    background: #fff;
-    color: #7386D5;
-}
+// a.download {
+//     background: #fff;
+//     color: #7386D5;
+// }
 
-a.article,
-a.article:hover {
-    background: #6d7fcc !important;
-    color: #fff !important;
-}
+// a.article,
+// a.article:hover {
+//     background: #6d7fcc !important;
+//     color: #fff !important;
+// }
 
 /* ---------------------------------------------------
     CONTENT STYLE
