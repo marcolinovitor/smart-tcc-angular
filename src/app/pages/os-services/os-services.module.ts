@@ -6,7 +6,8 @@ import { OsServicesNewComponent } from './os-services-form/os-services-new.compo
 import { OsServicesNewService } from './os-services-form/os-services-new.service';
 import { CoreModule } from 'src/app/core/core.module';
 import { OsServicesService } from './os-services-list/os-services.service';
-
+import { CheckboxModule } from 'primeng/checkbox';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -20,7 +21,9 @@ import { OsServicesService } from './os-services-list/os-services.service';
   ],
   imports: [
     CoreModule,
+    FormsModule,
     OsServicesRoutingModule,
+    CheckboxModule,
   ],
   providers: [
     OsServicesNewService,

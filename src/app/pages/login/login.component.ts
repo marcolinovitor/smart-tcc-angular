@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
     const item = {
       name: this.formLogin.value.login,
       profile: this.formLogin.value.senha,
+      email: 'marcolino.vitor@gmail.com'
     }
     this.sessionService.saveOnSession(item);
     this.route.navigate(['admin']);

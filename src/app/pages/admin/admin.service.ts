@@ -45,9 +45,9 @@ menuList(): ListMenu[] {
         {
             desc: 'Orçamentos',
             href: 'orcamentosSubMenu',
-            profile: ['admin', 'compras'],
+            profile: ['customer'],
             subMenu: [
-                { desc: 'Consultar', path: '/orcamentos' },
+                { desc: 'Meus orçamentos', path: '/orcamentos' },
                 { desc: 'Novo Orçamento', path: '/orcamentos/new' },
             ],
         }

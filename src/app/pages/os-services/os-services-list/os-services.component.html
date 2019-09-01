@@ -1,36 +1,46 @@
-<h2>
-	<strong>
-		Ordens de Serviço
-	</strong>
-</h2>
-<hr>
-<table class="table table-striped">
-	<thead>
-		<tr>
-			<th scope="col">#</th>
-			<th scope="col">First</th>
-			<th scope="col">Last</th>
-			<th scope="col">Handle</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<th scope="row">1</th>
-			<td>Mark</td>
-			<td>Otto</td>
-			<td>@mdo</td>
-		</tr>
-		<tr>
-			<th scope="row">2</th>
-			<td>Jacob</td>
-			<td>Thornton</td>
-			<td>@fat</td>
-		</tr>
-		<tr>
-			<th scope="row">3</th>
-			<td>Larry</td>
-			<td>the Bird</td>
-			<td>@twitter</td>
-		</tr>
-	</tbody>
-</table>
+<div *ngIf="!osList.length && !error" class="d-flex justify-content-center">
+	<div class="spinner-border" role="status"></div>
+</div>
+<div *ngIf="error" class="d-flex justify-content-center">
+	<i class="pi pi-ban"></i>
+	<br>
+	<span>Houver um erro inesperado. Tente novamente mais tarde</span>
+</div>
+<div *ngIf="osList.length" class="wrapper">
+
+	<h2>
+		<strong>
+			Ordens de Serviço
+		</strong>
+	</h2>
+	<table class="table table-striped mt-2">
+		<thead>
+			<tr>
+				<th scope="col">Número OS</th>
+				<th scope="col">Cliente</th>
+				<th class="text-center" scope="col">Serviço(s)</th>
+				<th scope="col">Valor Total</th>
+				<th class="text-center" scope="col">Aprovado</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let os of osList">
+				<td>{{ os.referencia }}</td>
+				<td>{{ os.carro.cliente.nome }}</td>
+				<td class="text-center">
+					<a><i class="pi pi-list"></i></a>
+				</td>
+				<td>{{ totalValue(os) | currency: 'BRL' }}</td>
+				<td class="text-center">
+					<span *ngIf="!isAdmin; else customer">
+						<p-checkbox [disabled]="true" [(ngModel)]="os.aprovacao"></p-checkbox>
+					</span>
+					<ng-template #customer>
+						{{ os.aprovacao ? 'Sim' : 'Não' }}
+					</ng-template>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+</div>

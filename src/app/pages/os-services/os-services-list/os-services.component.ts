@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OsServicesService } from './os-services.service';
+import { SessionService } from 'src/app/shared/session/session.service';
 
 @Component({
   selector: 'app-os-services',
@@ -8,9 +9,16 @@ import { OsServicesService } from './os-services.service';
 })
 export class OsServicesComponent implements OnInit {
 
+  osList: OsListResponse[] = [];
+
+  isAdmin: boolean;
+  error = false;
+
   constructor(
     private osServices: OsServicesService,
-  ) { }
+  ) {
+    this.isAdmin = this.osServices.isAdmin();
+  }
 
   ngOnInit() {
     this.getAllOrders();
@@ -18,9 +26,19 @@ export class OsServicesComponent implements OnInit {
 
   getAllOrders() {
     this.osServices.getAllOrders()
-      .subscribe((res) => {
-        console.log(res);
+      .subscribe((res) => {        
+        this.osList = res;
+      }, (err) => {
+        this.error = true;
       })
+  }
+
+  totalValue(item: OsListResponse): number {
+    let soma = 0;
+    item.servicos.forEach((servico) => {
+      soma += servico.valorServico;
+    })
+    return soma;
   }
 
 }
