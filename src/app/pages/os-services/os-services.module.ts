@@ -8,6 +8,7 @@ import { CoreModule } from 'src/app/core/core.module';
 import { OsServicesService } from './os-services-list/os-services.service';
 import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
+import { ModalModule } from 'src/app/shared/modal/modal.module';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     OsServicesRoutingModule,
     CheckboxModule,
+    ModalModule,
   ],
   providers: [
     OsServicesNewService,

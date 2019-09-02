@@ -11,6 +11,8 @@ export class OsServicesComponent implements OnInit {
 
   osList: OsListResponse[] = [];
 
+  servicosContratados: OsListResponse;
+
   isAdmin: boolean;
   error = false;
 
@@ -31,6 +33,12 @@ export class OsServicesComponent implements OnInit {
       }, (err) => {
         this.error = true;
       })
+  }
+
+  getServices(item: OsListResponse) {
+    console.log(item);
+    
+    this.servicosContratados = item;
   }
 
   totalValue(item: OsListResponse): number {

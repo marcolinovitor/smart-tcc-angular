@@ -46,7 +46,7 @@
             <select formControlName="marca" (change)="getVehiclesByBrand($event.target.value)" id="marca"
                 class="form-control">
                 <option selected>Selecione</option>
-                <option *ngFor="let v of vehiclesBrands" [value]="v.id">
+                <option *ngFor="let v of vehiclesBrands" [value]="v.name">
                     {{ v.name }}
                 </option>
             </select>
@@ -55,7 +55,7 @@
             <label for="modelo">Modelo do veículo</label>
             <select formControlName="modelo" id="modelo" class="form-control">
                 <option selected>Selecione</option>
-                <option *ngFor="let v of vehiclesName" [value]="v.id">
+                <option *ngFor="let v of vehiclesName" [value]="v.name">
                     {{ v.name }}
                 </option>
             </select>
