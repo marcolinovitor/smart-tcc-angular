@@ -36,8 +36,8 @@
             <label for="tipo">Tipo do veículo</label>
             <select (change)="getVehicles($event.target.value)" id="tipo" class="form-control">
                 <option selected>Selecione</option>
-                <option *ngFor="let t of tipos" [value]="t.value">
-                    {{ t.name }}
+                <option *ngFor="let t of tipos" [value]="t.codigo">
+                    {{ t.nome }}
                 </option>
             </select>
         </div>

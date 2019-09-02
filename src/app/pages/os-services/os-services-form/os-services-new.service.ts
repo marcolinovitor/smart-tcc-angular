@@ -25,24 +25,24 @@ export class OsServicesNewService {
 
     getVehicles(tipo: string): Observable<IVehicles[]> {
         this.tipo = tipo;
-        const url = `${this.urlFipe}${this.tipo}/marcas.json`;
+        const url = `${this.urlFipe}${this.tipo}/marcas`;
         return this.http.get<IVehicles[]>(url)
             .pipe(
                 map((res) => {
                     const list = [];
-                    res.forEach(item => list.push({ id: item.id, name: item.name }))
+                    res.forEach(item => list.push({ id: item.codigo, name: item.nome }))
                     return list;
                 })
             );
     }
 
     getVehiclesName(marca: number): Observable<IVehicles[]> {
-        const url = `${this.urlFipe}${this.tipo}/veiculos/${marca}.json`;
-        return this.http.get<IVehicles[]>(url)
+        const url = `${this.urlFipe}${this.tipo}/marcas/${marca}/modelos`;
+        return this.http.get<FipeModelos>(url)
             .pipe(
                 map((cars) => {
                     const list = [];
-                    cars.forEach(car => list.push({ id: car.id, name: car.name }));
+                    cars.modelos.forEach(car => list.push({ id: car.codigo, name: car.nome }));
                     return list;
                 })
             );

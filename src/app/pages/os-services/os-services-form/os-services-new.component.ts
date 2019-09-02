@@ -16,9 +16,9 @@ import { ToastrService } from 'ngx-toastr';
 export class OsServicesNewComponent implements OnInit {
 
   tipos: IVehicles[] = [
-    { name: 'Carro', value: 'carros' },
-    { name: 'Moto', value: 'motos' },
-    { name: 'Caminhão', value: 'caminhoes' },
+    { nome: 'Carro', codigo: 'carros' },
+    { nome: 'Moto', codigo: 'motos' },
+    { nome: 'Caminhão', codigo: 'caminhoes' },
   ];
 
   services: Services[] = [{
