@@ -140,17 +140,20 @@ export class OsServicesNewComponent implements OnInit {
 
   saveOS(form: IOrcamentoForm) {
     this.submitting = true;
-    const order = new OrcamentoForm(form, this.servicesAdded);
+    const carro = {
+      marca: this.vehiclesBrands.find(f => f.codigo == form.marca).nome,
+      modelo: this.vehiclesName.find(f => f.codigo == form.modelo).nome,
+    };
+    const order = new OrcamentoForm(form, this.servicesAdded, carro);
     this.osServicesNew.saveOsService(order)
       .subscribe((res) => {
         if (res.referencia) {
           this.toastr.success(`Número da OS: ${res.referencia}`, 'Sucesso');
         }
-      }, (err) => {
-        this.toastr.error(`Parece que houve um erro ... `, 'Ops');
-      }, () => {
         this.orcamentoForm.reset('');
         this.submitting = false;
+      }, (err) => {
+        this.toastr.error(`Parece que houve um erro ... `, 'Ops');
       });
   }
 

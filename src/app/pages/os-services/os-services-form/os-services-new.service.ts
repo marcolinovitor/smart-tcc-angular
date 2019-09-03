@@ -30,7 +30,7 @@ export class OsServicesNewService {
             .pipe(
                 map((res) => {
                     const list = [];
-                    res.forEach(item => list.push({ id: item.codigo, name: item.nome }))
+                    res.forEach(item => list.push({ codigo: item.codigo, nome: item.nome }))
                     return list;
                 })
             );
@@ -42,7 +42,7 @@ export class OsServicesNewService {
             .pipe(
                 map((cars) => {
                     const list = [];
-                    cars.modelos.forEach(car => list.push({ id: car.codigo, name: car.nome }));
+                    cars.modelos.forEach(car => list.push({ codigo: car.codigo, nome: car.nome }));
                     return list;
                 })
             );
