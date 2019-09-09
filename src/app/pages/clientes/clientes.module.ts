@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { ClientesRoutingModule } from './clientes-routing.module';
 import { ClientesComponent } from './clientes-form/clientes.component';
 import { ClientesListComponent } from './clientes-list/clientes-list.component';
 import { ClientesListService } from './clientes-list/clientes-list.service';
 import { FormsModule } from '@angular/forms';
+import { CoreModule } from 'src/app/core/core.module';
+import { ModalModule } from 'src/app/shared/modal/modal.module';
 
 
 @NgModule({
@@ -18,8 +19,9 @@ import { FormsModule } from '@angular/forms';
     ClientesListComponent,
   ],
   imports: [
-    CommonModule,
     FormsModule,
+    CoreModule,
+    ModalModule,
     ClientesRoutingModule
   ],
   providers: [

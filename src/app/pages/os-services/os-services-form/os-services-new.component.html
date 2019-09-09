@@ -1,6 +1,6 @@
 <h2>Nova Ordem de Serviço</h2>
 <hr>
-<form [formGroup]="orcamentoForm">
+<form autocomplete="off" [formGroup]="orcamentoForm">
     <div class="form-row">
         <div class="form-group col-md-3">
             <app-input-container errorMessage="Documento inválido" label="CPF / CNPJ do Cliente">
@@ -99,8 +99,9 @@
         </div>
         <div *ngIf="newService" class="form-group col-md-3">
             <app-input-container errorMessage="Informe um novo serviço" label="Outros">
-                <input [ngClass]="{'is-valid': isValid('pecas'), 'is-invalid': isInvalid('pecas')}"
-                    formControlName="servico" type="text" class="form-control" placeholder="Peças trocadas">
+                <input (blur)="saveService('outros')"
+                    [ngClass]="{'is-valid': isValid('pecas'), 'is-invalid': isInvalid('pecas')}"
+                    formControlName="outros" type="text" class="form-control" placeholder="Informe o serviço">
             </app-input-container>
         </div>
         <div [ngClass]="{'col-md-6': !newService, 'col-md-3': newService}" class="form-group">
@@ -146,10 +147,15 @@
     </div>
     <hr>
     <div class="btn-row">
-        <button [disabled]="orcamentoForm.invalid || !servicesAdded.length" (click)="saveOS(orcamentoForm.value)"
-            type="submit" class="btn btn-primary col-md-2">
-            <span *ngIf="submitting" class="spinner-border spinner-border-sm" role="status"></span>
-            {{ submitting ? 'Aguarde ...' : 'Salvar OS' }}
+        <button [disabled]="orcamentoForm.invalid || !servicesAdded.length || submitting"
+            (click)="saveOS(orcamentoForm.value)" type="submit" class="btn btn-primary col-md-2">
+            <span *ngIf="submitting; else noSubmit">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Salvando ...
+            </span>
+            <ng-template #noSubmit>
+                Salvar OS
+            </ng-template>
         </button>
     </div>
 </form>

@@ -36,16 +36,15 @@ menuList(): ListMenu[] {
         {
             desc: 'Clientes',
             href: 'clientSubMenu',
-            profile: ['Mecanico', 'compras'],
+            profile: ['Mecanico'],
             subMenu: [
-                { desc: 'Consultar', path: 'clientes' },
-                { desc: 'Cadastrar Cliente', path: 'clientes/new' },
+                { desc: 'Consultar / Cadastrar', path: 'clientes' },
             ],
         },
         {
             desc: 'Orçamentos',
             href: 'orcamentosSubMenu',
-            profile: ['customer'],
+            profile: ['Cliente'],
             subMenu: [
                 { desc: 'Meus orçamentos', path: '/orcamentos' },
                 { desc: 'Novo Orçamento', path: '/orcamentos/new' },

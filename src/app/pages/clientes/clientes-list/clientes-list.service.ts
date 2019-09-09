@@ -13,4 +13,8 @@ export class ClientesListService {
   getClientes(): Observable<ClienteResponse[]> {
     return this.http.get<ClienteResponse[]>(`${this.url}/cliente`);
   }
+
+  getClienteByCPF(cpf: string): Observable<ClienteResponse> {
+    return this.http.get<ClienteResponse>(`${this.url}/cliente/${cpf}`);
+  }
 }

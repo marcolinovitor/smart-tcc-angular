@@ -71,8 +71,8 @@ export class OsServicesNewComponent implements OnInit {
 
   createForm() {
     this.orcamentoForm = this.fb.group({
-      marca: ['', [Validators.required]],
-      modelo: ['', [Validators.required]],
+      marca: [{ value: '', disabled: true }, [Validators.required]],
+      modelo: [{ value: '', disabled: true }, [Validators.required]],
       placa: ['', [Validators.required, Validators.pattern(this.regexPlaca), Validators.minLength(7), Validators.maxLength(7)]],
       cpfcnpj: ['', [Validators.required, this.documentDomainValidator]],
       nome: ['', [Validators.required]],
@@ -82,7 +82,8 @@ export class OsServicesNewComponent implements OnInit {
       diagnosticado: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500)]],
       servico: ['', [Validators.required]],
       pecas: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30)]],
-      valor: ['', [Validators.required]]
+      valor: ['', [Validators.required, Validators.min(1)]],
+      outros: [''],
     });
   }
 
@@ -138,7 +139,11 @@ export class OsServicesNewComponent implements OnInit {
     this.orcamentoForm.controls['valor'].patchValue(valor);
   }
 
-  saveOS(form: IOrcamentoForm) {
+  saveService(ctrl: string) {
+    console.log(this.orcamentoForm.controls[ctrl].value);
+  }
+
+  saveOS(form: IOrcamentoForm) {   
     this.submitting = true;
     const carro = {
       marca: this.vehiclesBrands.find(f => f.codigo == form.marca).nome,
@@ -149,9 +154,9 @@ export class OsServicesNewComponent implements OnInit {
       .subscribe((res) => {
         if (res.referencia) {
           this.toastr.success(`Número da OS: ${res.referencia}`, 'Sucesso');
+          this.submitting = false;
         }
         this.orcamentoForm.reset('');
-        this.submitting = false;
       }, (err) => {
         this.toastr.error(`Parece que houve um erro ... `, 'Ops');
       });

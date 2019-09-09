@@ -35,9 +35,7 @@ export class OsServicesComponent implements OnInit {
       })
   }
 
-  getServices(item: OsListResponse) {
-    console.log(item);
-    
+  getServices(item: OsListResponse) {  
     this.servicosContratados = item;
   }
 
