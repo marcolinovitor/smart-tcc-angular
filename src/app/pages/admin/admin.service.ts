@@ -86,7 +86,7 @@ welcomeUser() {
 profileDescription(): string {
     return [
         { prof: 'Mecanico', desc: 'Administração' },
-        { prof: 'compras', desc: 'Orçamentos' },
+        { prof: 'Cliente', desc: 'Cliente' },
     ].find((f) => f.prof === this.getUserProfile().authenticatedRole).desc;
 }
 }

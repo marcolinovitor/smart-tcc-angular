@@ -10,7 +10,7 @@
             <div class="form-row">
                 <div class="form-group col-md-3">
                     <app-input-container errorMessage="Documento inválido" label="CPF / CNPJ do Cliente">
-                        <input [ngClass]="{'is-valid': isValid('cpfcnpj'), 'is-invalid': isInvalid('cpfcnpj')}"
+                        <input mask='{000.000.000-00}' [ngClass]="{'is-valid': isValid('cpfcnpj'), 'is-invalid': isInvalid('cpfcnpj')}"
                             formControlName="cpfcnpj" type="text" class="form-control" id="cpfcnpj"
                             placeholder="Informe o documento">
                     </app-input-container>
@@ -24,8 +24,8 @@
                 </div>
                 <div class="form-group col-md-3">
                     <app-input-container errorMessage="Informe um telefone válido" label="Telefone">
-                        <input [ngClass]="{'is-valid': isValid('fone'), 'is-invalid': isInvalid('fone')}"
-                            formControlName="fone" type="text" class="form-control" id="fone"
+                        <input [ngClass]="{'is-valid': isValid('telefone'), 'is-invalid': isInvalid('telefone')}"
+                            formControlName="telefone" type="text" class="form-control" id="telefone"
                             placeholder="(00) 00000-0000">
                     </app-input-container>
                 </div>
@@ -38,8 +38,8 @@
                             placeholder="Informe um email">
                     </app-input-container>
                 </div>
-                <div class="form-group col-md-9">
-                    <button class="btn btn-primary float-right col-md-4" type="button">Salvar</button>
+                <div id="btn-save" class="form-group col-md-9">
+                    <button [disabled]="clienteForm.invalid" (click)="saveClient(clienteForm.value)" class="btn btn-primary float-right col-md-4" type="button">Salvar</button>
                 </div>
             </div>
         </form>

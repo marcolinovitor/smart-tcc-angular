@@ -2,16 +2,32 @@ import { Component, OnInit } from '@angular/core';
 import { ClientesListService } from './clientes-list.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { utils } from 'src/app/shared/utils/utils';
 import { VeiculoCliente } from './model/veiculo-cliente.interface';
+import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
 
 @Component({
   selector: 'app-clientes-list',
   templateUrl: './clientes-list.component.html',
   styleUrls: ['./clientes-list.component.scss'],
+  animations: [
+    trigger('row', [
+      state('ready', style({ opacity: 1 })),
+      transition('void => ready', animate('300ms 0s ease-in', keyframes([
+        style({ opacity: 0, transform: 'translateX(-30px)', offset: 0 }),
+        style({ opacity: 0.8, transform: 'translateX(10px)', offset: 0.8 }),
+        style({ opacity: 1, transform: 'translateX(0px)', offset: 1 })
+      ]))),
+      transition('ready => void', animate('300ms 0s ease-out', keyframes([
+        style({ opacity: 1, transform: 'translateX(0px)', offset: 0 }),
+        style({ opacity: 0.8, transform: 'translateX(-10px)', offset: 0.2 }),
+        style({ opacity: 0, transform: 'translateX(30px)', offset: 1 })
+      ]))),
+    ])
+  ]
 })
 export class ClientesListComponent implements OnInit {
+
+  state = 'ready';
 
   clientes: ClienteResponse[] = [];
   veiculosCliente: VeiculoCliente[] = [];
@@ -27,6 +43,13 @@ export class ClientesListComponent implements OnInit {
 
   ngOnInit() {
     this.getClientes();
+    this.novoCliente();
+  }
+
+  novoCliente() {
+    this.clienteListService.novoCliente.subscribe((cliente) => {
+      if (cliente) this.clientes.push(cliente);
+    })
   }
 
   getClientes() {
@@ -55,8 +78,16 @@ export class ClientesListComponent implements OnInit {
       })
   }
 
-  removeItem(index: number) {
-    this.clientes.splice(index, 1);
+  removeItem(cliente: ClienteResponse) {  
+    this.clienteListService.removeCliente(cliente.id)
+      .subscribe((res) => {
+        this.toastr.success(`Cliente: ${res.nome}`, 'Removido!')
+          .onShown.subscribe((obs) => {
+            this.clientes.splice(this.clientes.indexOf(cliente), 1);
+          })
+      }, (err) => {
+        console.log(err);
+      })
   }
 
 }

@@ -26,7 +26,7 @@ import { ErrorInterceptor } from './shared/guards/error.interceptor';
       timeOut: 10000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
-    })
+    }),
   ],
   providers: [
     AppService,

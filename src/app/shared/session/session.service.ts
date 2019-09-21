@@ -20,8 +20,10 @@ export class SessionService {
   }
 
   logout(route?: string) {
-    sessionStorage.clear();
-    if (route) this.route.navigate([route]);
+    if (route) this.route.navigate([route])
+      .then(() => {
+        sessionStorage.clear();
+      })
   }
 
   decrypt(obj) {

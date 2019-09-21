@@ -11,4 +11,5 @@ export interface IOrcamentoForm {
     servico: string;
     pecas: string;
     valor: number;
+    outros?: string;
 }

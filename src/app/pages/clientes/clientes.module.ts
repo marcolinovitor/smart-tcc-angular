@@ -25,7 +25,7 @@ import { ModalModule } from 'src/app/shared/modal/modal.module';
     ClientesRoutingModule
   ],
   providers: [
-    ClientesListService
+    ClientesListService,
   ]
 })
 export class ClientesModule { }

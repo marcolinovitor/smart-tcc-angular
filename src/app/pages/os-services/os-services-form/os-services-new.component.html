@@ -99,8 +99,7 @@
         </div>
         <div *ngIf="newService" class="form-group col-md-3">
             <app-input-container errorMessage="Informe um novo serviço" label="Outros">
-                <input (blur)="saveService('outros')"
-                    [ngClass]="{'is-valid': isValid('pecas'), 'is-invalid': isInvalid('pecas')}"
+                <input [ngClass]="{'is-valid': isValid('outros'), 'is-invalid': isInvalid('outros')}"
                     formControlName="outros" type="text" class="form-control" placeholder="Informe o serviço">
             </app-input-container>
         </div>

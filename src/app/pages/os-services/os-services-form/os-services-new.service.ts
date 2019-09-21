@@ -16,7 +16,7 @@ export interface Services {
 
 @Injectable()
 export class OsServicesNewService {
-
+  
     private urlFipe = urls.fipe.api;
     private urlApi = urls.smart.api;
     private tipo: string;
@@ -58,7 +58,11 @@ export class OsServicesNewService {
                     return list;
                 })
             );
+    }
 
+    saveService<T>(servico: { nome: string; valor: number; }): Observable<T> {
+        const url = `${this.urlApi}/servico`;
+        return this.http.post<T>(url, servico);
     }
 
     saveOsService(form: OrcamentoForm): Observable<OsResponse> {       
