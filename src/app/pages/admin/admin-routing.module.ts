@@ -4,6 +4,7 @@ import { AdminComponent } from './admin.component';
 import { ProfileGuardService } from 'src/app/shared/guards/profile-guard.service';
 import { OsServicesModule } from '../os-services/os-services.module';
 import { ClientesModule } from '../clientes/clientes.module';
+import { ClienteGuardService } from 'src/app/shared/guards/cliente-guard.service';
 
 
 const routes: Routes = [
@@ -19,6 +20,12 @@ const routes: Routes = [
       {
         path: 'clientes',
         loadChildren: '../clientes/clientes.module#ClientesModule'
+      },
+      {
+        path: 'orcamentos',
+        canActivate: [ClienteGuardService],
+        canLoad: [ClienteGuardService],
+        loadChildren: '../orcamento/orcamento.module#OrcamentoModule'
       }
     ]
   },

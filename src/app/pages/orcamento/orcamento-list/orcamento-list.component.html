@@ -1,0 +1,61 @@
+<div *ngIf="!render" class="d-flex justify-content-center">
+	<div class="spinner-border" role="status"></div>
+</div>
+<div *ngIf="render && orcamentoList.length > 0; else noContent" class="row">
+	<div *ngFor="let os of orcamentoList let i = index" [@card]="state" class="col-sm-4 mb-3">
+		<div class="card {{ status(os.status).classBorder }}">
+			<div class="card-body">
+				<h5 class="card-title">
+					{{ os.carro.marca }} | {{ os.carro.modelo }}
+				</h5>
+				<h6 class="card-subtitle mb-2 text-muted">
+					Nº: {{ os.referencia }}
+				</h6>
+				<hr>
+				<p class="card-text mt-2">
+					<span class="font-weight-bold">
+						Relatado
+					</span>
+					<br>{{ os.problemaRelatado }}
+				</p>
+				<p class="card-text">
+					<span class="font-weight-bold">
+						Diagnosticado
+					</span>
+					<br>{{ os.problemaDescrito }}
+				</p>
+			</div>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">
+					<i class="fas fa-tools"></i> &nbsp;
+					<a class="card-link">serviços a realizar</a>
+				</li>
+				<li class="list-group-item">
+					{{ totalValue(os) | currency: 'BRL' }}
+					<span class="badge float-right {{ status(os.status).classBadge }}">
+						{{ status(os.status).status }}
+					</span>
+				</li>
+			</ul>
+			<div *ngIf="os.status === 1 && !submitting" class="card-body">
+				<a (click)="aprovarOrcamento(i, 2, true)" class="card-link">
+					Aprovar
+				</a>
+				<a (click)="aprovarOrcamento(i, 3, false)" class="card-link text-muted">
+					Reprovar
+				</a>
+			</div>
+			<div *ngIf="submitting" class="card-body">
+				<div class="d-flex align-items-center">
+					<strong>Aguarde ...</strong>
+					<div class="spinner-border ml-auto text-primary" role="status"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<ng-template #noContent>
+	<div *ngIf="render" class="d-flex justify-content-center">
+		Não existem Orçamentos
+	</div>
+</ng-template>

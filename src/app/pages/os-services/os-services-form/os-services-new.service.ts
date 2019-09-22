@@ -77,7 +77,7 @@ export class OsServicesNewService {
             ProblemaRelatado: form.relatado,
             ProblemaDescrito: form.diagnosticado,
             Carro: {
-                Placa: form.carro.placa,
+                Placa: form.carro.placa.toUpperCase(),
                 Modelo: form.carro.modelo,
                 Marca: form.carro.marca,
                 Cliente: {
@@ -85,7 +85,7 @@ export class OsServicesNewService {
                     CpfCnpj: form.carro.cliente.cpfCnpj,
                     Telefone: form.carro.cliente.telefone,
                     Email: form.carro.cliente.email,
-                    PerfilSistema: form.carro.cliente.perfilSistema,
+                    PerfilSistema: 'Cliente',
                 }
             },
             Servicos: form.servico,
