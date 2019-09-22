@@ -1,3 +1,4 @@
+
 const cpfInvalids = [
     '00000000000', '11111111111', '22222222222', '33333333333', '44444444444',
     '55555555555', '66666666666', '77777777777', '88888888888', '99999999999'
@@ -6,6 +7,13 @@ const cnpjInvalids = [
     '00000000000000', '11111111111111', '22222222222222', '33333333333333', '44444444444444',
     '55555555555555', '66666666666666', '77777777777777', '88888888888888', '99999999999999'
 ];
+
+export interface IStatus {
+	status: string;
+	classBadge: string;
+    classBorder: string;
+    btnClass?: string;
+}
 
 export class Utils {
 
@@ -58,6 +66,43 @@ export class Utils {
         resultado = soma % 11 < 2 ? 0 : 11 - soma % 11
         if (resultado != Number.parseInt(digitos.charAt(1))) return true
         return false;
+    }
+
+    statusOs(id: number): IStatus {
+        switch (id) {
+			case 1: return {
+				status: 'Pendente',
+				classBadge: 'badge-warning',
+				classBorder: 'border-warning',
+			}
+			case 2: return {
+				status: 'Aprovado',
+				classBadge: 'badge-success',
+                classBorder: 'border-success',
+                btnClass: 'btn-success'
+			}
+			case 3: return {
+				status: 'Reprovado',
+				classBadge: 'badge-danger',
+				classBorder: 'border-danger',
+			}
+			case 4: return {
+				status: 'Em andamento',
+				classBadge: 'badge-info',
+                classBorder: 'border-info',
+                btnClass: 'btn-info'
+            }
+            case 5: return {
+                status: 'Finalizado',
+				classBadge: 'badge-dark',
+				classBorder: 'border-dark',
+            }
+			default: return {
+				status: 'Indisponível',
+				classBadge: 'badge-secondary',
+				classBorder: 'border-light',
+			}
+		}
     }
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OrcamentoListService, IStatus } from './orcamento-list.service';
+import { OrcamentoListService } from './orcamento-list.service';
 import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
 import { IOrcamentoList } from './contract/orcamento-list.interface';
 
@@ -67,7 +67,7 @@ export class OrcamentoListComponent implements OnInit {
 	return total;
   }
 
-  status(id: number): IStatus {
+  status(id: number) {
 	return this.orcamentoService.statusOs(id);
   }
 

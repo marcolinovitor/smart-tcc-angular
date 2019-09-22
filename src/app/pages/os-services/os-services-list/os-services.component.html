@@ -20,7 +20,7 @@
 				<th scope="col">Cliente</th>
 				<th class="text-center" scope="col">Serviço(s)</th>
 				<th scope="col">Valor Total</th>
-				<th class="text-center" scope="col">Aprovado</th>
+				<th class="text-center" scope="col">Status</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -34,12 +34,9 @@
 				</td>
 				<td>{{ totalValue(os) | currency: 'BRL' }}</td>
 				<td class="text-center">
-					<span *ngIf="!isAdmin; else customer">
-						<p-checkbox [disabled]="true" [(ngModel)]="os.aprovacao"></p-checkbox>
+					<span class="badge {{ setStatus(os.status).classBadge }}">
+						{{ setStatus(os.status).status }}
 					</span>
-					<ng-template #customer>
-						{{ os.aprovacao ? 'Sim' : 'Não' }}
-					</ng-template>
 				</td>
 			</tr>
 		</tbody>

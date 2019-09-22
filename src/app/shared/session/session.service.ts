@@ -16,7 +16,7 @@ export class SessionService {
   getFromSession(): LoginUser {
     const u = sessionStorage.getItem('user');
    
-    return u ? this.decrypt(u) : '';
+    return u ? this.decrypt(u) : undefined;
   }
 
   logout(route?: string) {

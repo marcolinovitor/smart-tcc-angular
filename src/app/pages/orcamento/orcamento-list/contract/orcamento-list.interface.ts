@@ -8,7 +8,7 @@ export interface IOrcamentoList {
   carro: Carro;
   servicos: Servico[];
   id: number;
-  turned?: boolean;
+  updating?: boolean;
 }
 
 export interface Servico {

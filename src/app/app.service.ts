@@ -23,8 +23,24 @@ export class AppService {
     ) { }
 
     isLoggedIn() {
-        const isLogged = !!this.sessionService.getFromSession();       
-        isLogged ? this.route.navigate(['admin']) : this.route.navigate(['login']);
+        const user = this.sessionService.getFromSession();
+        if (user) {
+            switch (user.authenticatedRole) {
+                case 'Mecanico': {
+                    this.route.navigate(['admin/dashboard']);
+                    break;
+                }
+                case 'Cliente': {
+                    this.route.navigate(['admin/orcamentos']);
+                    break;
+                }
+                default: {
+                    this.route.navigate(['login']);
+                }
+            }
+        } else {
+            this.route.navigate(['login']);
+        }
     }
 
 }
