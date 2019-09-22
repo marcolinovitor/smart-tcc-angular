@@ -1,0 +1,66 @@
+<div *ngIf="!render" class="d-flex justify-content-center">
+    <div class="spinner-border" role="status"></div>
+</div>
+<div *ngIf="render && orders.length > 0; else noContent" class="row">
+    <div *ngFor="let order of orders let i = index" [@card]="state" class="col-sm-4 mb-3">
+        <div class="card {{ status(order.status).classBorder }}">
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{ order.carro.marca }} | {{ order.carro.modelo }}
+                </h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                    Nº: {{ order.referencia }}
+                </h6>
+                <h6 class="card-subtitle mb-2 text-muted">
+                    {{ order.carro.cliente.nome }}
+                </h6>
+                <hr>
+                <p class="card-text mt-2">
+                    <span class="font-weight-bold">
+                        Relatado
+                    </span>
+                    <br>{{ order.problemaRelatado }}
+                </p>
+                <p class="card-text">
+                    <span class="font-weight-bold">
+                        Diagnosticado
+                    </span>
+                    <br>{{ order.problemaDescrito }}
+                </p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <i class="fas fa-tools"></i> &nbsp;
+                    <a class="card-link">serviços a realizar</a>
+                </li>
+                <li class="list-group-item">
+                    {{ totalValue(order) | currency: 'BRL' }}
+                    <span class="badge float-right {{ status(order.status).classBadge }}">
+                        {{ status(order.status).status }}
+                    </span>
+                </li>
+            </ul>
+            <div *ngIf="!order.updating" class="card-body">
+                <button *ngIf="order.status === 2" (click)="atualizarStatus(i, 4)"
+                    class="btn {{ status(order.status).btnClass }}">
+                    Colocar em andamento
+                </button>
+                <button *ngIf="order.status === 4" (click)="atualizarStatus(i, 5)"
+                    class="btn {{ status(order.status).btnClass }}">
+                    Finalizar
+                </button>
+            </div>
+            <div *ngIf="submitting && order.updating" class="card-body">
+                <div class="d-flex align-items-center">
+                    <strong>Aguarde ...</strong>
+                    <div class="spinner-border ml-auto text-primary" role="status"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #noContent>
+    <div *ngIf="render" class="d-flex justify-content-center">
+        Não existem Ordens&nbsp;<strong>aprovadas</strong>&nbsp;e/ou&nbsp;<strong>em andamento</strong>
+    </div>
+</ng-template>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OsServicesService } from './os-services.service';
-import { SessionService } from 'src/app/shared/session/session.service';
+import { IStatus } from 'src/app/shared/utils/utils';
 
 @Component({
   selector: 'app-os-services',
@@ -45,6 +45,10 @@ export class OsServicesComponent implements OnInit {
       soma += servico.valorServico;
     })
     return soma;
+  }
+
+  setStatus(status: number) {
+    return this.osServices.setStatus(status);
   }
 
 }

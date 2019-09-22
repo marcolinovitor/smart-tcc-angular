@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SessionService } from 'src/app/shared/session/session.service';
 import { map } from 'rxjs/operators';
+import { utils } from 'src/app/shared/utils/utils';
 
 @Injectable()
 export class OsServicesService {
@@ -31,6 +32,10 @@ export class OsServicesService {
           }
         })
       );
+  }
+
+  setStatus(id: number) {
+    return utils.statusOs(id);
   }
 
   isAdmin(): boolean {

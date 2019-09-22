@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { ProfileGuardService } from 'src/app/shared/guards/profile-guard.service';
-import { OsServicesModule } from '../os-services/os-services.module';
-import { ClientesModule } from '../clientes/clientes.module';
 import { ClienteGuardService } from 'src/app/shared/guards/cliente-guard.service';
 
 
@@ -16,6 +14,11 @@ const routes: Routes = [
         path: 'os-services',
         canActivate: [ProfileGuardService],
         loadChildren: '../os-services/os-services.module#OsServicesModule'
+      },
+      {
+        path: 'dashboard',
+        canActivate: [ProfileGuardService],
+        loadChildren: '../dashboard/dashboard.module#DashboardModule'
       },
       {
         path: 'clientes',

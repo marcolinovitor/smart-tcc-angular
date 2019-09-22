@@ -26,8 +26,9 @@ export class LoginService {
             .pipe(
                 map((usuario: LoginUser) => {
                     if (usuario) {
+                        const role = usuario.authenticatedRole === 'Mecanico';
                         this.session.saveOnSession(usuario);
-                        this.route.navigate(['admin']);
+                        this.route.navigate([`admin${role ? '/dashboard': '/orcamentos'}`]);
                         return true;
                     }
                 })
