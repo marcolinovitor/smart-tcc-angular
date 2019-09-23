@@ -16,7 +16,11 @@ export class OrcamentoListService {
 	) { }
 
 	getOrcamentos(): Observable<IOrcamentoList[]> {
-		return this.http.get<IOrcamentoList[]>(`${urls.smart.api}/ordemservico`);
+		const doc = this.sessionService.getFromSession().clientDocument;
+		return this.http.get<IOrcamentoList[]>(`${urls.smart.api}/ordemservico/buscarpordocumento/${doc}`)
+			.pipe(
+				catchError(err => throwError(null))
+			);
 	}
 
 	getUserEmail(): string {

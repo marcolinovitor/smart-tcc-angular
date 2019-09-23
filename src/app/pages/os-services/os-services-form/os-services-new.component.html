@@ -4,28 +4,28 @@
     <div class="form-row">
         <div class="form-group col-md-3">
             <app-input-container errorMessage="Documento inválido" label="CPF / CNPJ do Cliente">
-                <input [ngClass]="{'is-valid': isValid('cpfcnpj'), 'is-invalid': isInvalid('cpfcnpj')}"
+                <input (blur)="getCliente('cpfcnpj')" [ngClass]="{'is-valid': isValid('cpfcnpj'), 'is-invalid': isInvalid('cpfcnpj')}"
                     formControlName="cpfcnpj" type="text" class="form-control" id="cpfcnpj"
                     placeholder="Informe o documento">
             </app-input-container>
         </div>
         <div class="form-group col-md-6">
             <app-input-container errorMessage="Informe um nome válido" label="Nome do Cliente">
-                <input [ngClass]="{'is-valid': isValid('nome'), 'is-invalid': isInvalid('nome')}" formControlName="nome"
+                <input [readOnly]="readonly" [ngClass]="{'is-valid': isValid('nome'), 'is-invalid': isInvalid('nome')}" formControlName="nome"
                     type="text" class="form-control" id="nome" placeholder="Informe o nome do cliente">
             </app-input-container>
         </div>
         <div class="form-group col-md-3">
             <app-input-container errorMessage="Informe um telefone válido" label="Telefone">
-                <input [ngClass]="{'is-valid': isValid('fone'), 'is-invalid': isInvalid('fone')}" formControlName="fone"
-                    type="text" class="form-control" id="fone" placeholder="(00) 00000-0000">
+                <input [readOnly]="readonly" [ngClass]="{'is-valid': isValid('fone'), 'is-invalid': isInvalid('fone')}" formControlName="fone"
+                    type="text" class="form-control" id="fone" placeholder="Somente números">
             </app-input-container>
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-4">
             <app-input-container errorMessage="Informe um email válido" label="Email">
-                <input [ngClass]="{'is-valid': isValid('email'), 'is-invalid': isInvalid('email')}"
+                <input [readOnly]="readonly" [ngClass]="{'is-valid': isValid('email'), 'is-invalid': isInvalid('email')}"
                     formControlName="email" type="text" class="form-control" id="email" placeholder="Informe um email">
             </app-input-container>
         </div>

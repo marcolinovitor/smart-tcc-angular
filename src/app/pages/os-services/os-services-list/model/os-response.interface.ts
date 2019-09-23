@@ -2,6 +2,7 @@ interface OsListResponse {
   status: number;
   aprovacao: boolean;
   referencia: string;
+  dataAbertura: Date;
   problemaRelatado: string;
   problemaDescrito: string;
   carroId: number;

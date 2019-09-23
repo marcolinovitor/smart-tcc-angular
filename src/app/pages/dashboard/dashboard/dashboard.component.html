@@ -8,8 +8,11 @@
                 <h5 class="card-title">
                     {{ order.carro.marca }} | {{ order.carro.modelo }}
                 </h5>
-                <h6 class="card-subtitle mb-2 text-muted">
+                <h6 class="card-subtitle mb-3 text-muted">
                     Nº: {{ order.referencia }}
+                    <span class="float-right">
+                        {{ order.dataAbertura | date: 'dd/MM/yy' }}
+                    </span>
                 </h6>
                 <h6 class="card-subtitle mb-2 text-muted">
                     {{ order.carro.cliente.nome }}
@@ -31,7 +34,14 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                     <i class="fas fa-tools"></i> &nbsp;
-                    <a class="card-link">serviços a realizar</a>
+                    <a class="card-link" data-toggle="collapse" data-target="#collapseExample">serviços a realizar</a>
+                    <div class="collapse" id="collapseExample">
+                        <div class="card mt-3 card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
+                            squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente
+                            ea proident.
+                        </div>
+                    </div>
                 </li>
                 <li class="list-group-item">
                     {{ totalValue(order) | currency: 'BRL' }}

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { urls } from 'src/environments/urls';
 import { IVehicles } from './model/vehicles.model';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { Request } from './model/request.interface';
 import { OrcamentoForm, Servico } from './model/orcamento-form.model';
 import { IOrcamentoForm } from './model/orcamento-form.interface';
@@ -46,6 +46,15 @@ export class OsServicesNewService {
                     return list;
                 })
             );
+    }
+
+    getCliente(document: string): Observable<ClienteResponse> {
+        const url = `${this.urlApi}/cliente/buscarpordocumento/${document}`;
+        return this.http.get<ClienteResponse>(url)
+            .pipe(
+                map(cliente => cliente),
+                catchError(err => throwError(err))
+            )
     }
 
     getServices(): Observable<Services[]> {

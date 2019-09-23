@@ -72,6 +72,10 @@ getUserProfile() {
     return this.sessionService.getFromSession();
 }
 
+isAdmin() {
+    return this.sessionService.getFromSession().authenticatedRole === 'Mecanico';
+}
+
 logout() {
     this.sessionService.logout('login');
 }

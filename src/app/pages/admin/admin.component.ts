@@ -40,4 +40,8 @@ export class AdminComponent implements OnInit {
     return this.adminService.getUserProfile().authenticatedRole;
   }
 
+  isAdmin(): boolean {
+    return this.adminService.isAdmin();
+  }
+
 }
