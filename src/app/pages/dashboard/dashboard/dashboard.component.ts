@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, state, transition, style, animate, keyframes } from '@angular/animations';
-import { IOrcamentoList } from '../../orcamento/orcamento-list/contract/orcamento-list.interface';
+import { IOrcamentoList, Servico } from '../../orcamento/orcamento-list/contract/orcamento-list.interface';
 import { DashboardService } from './dashboard.service';
 import { utils } from '../../../shared/utils/utils';
 
@@ -48,6 +48,11 @@ export class DashboardComponent implements OnInit {
 				this.render = true;
 			})
 	}
+	
+	// verServicos(servicos: Servico[]) {
+		
+	// 	console.log(servicos);
+	// }
 
 	atualizarStatus(i: number, status: number) {
 		this.change(i);

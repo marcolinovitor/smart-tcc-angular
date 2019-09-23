@@ -113,23 +113,23 @@ export class OsServicesNewComponent implements OnInit {
 	}
 
 	addService(form: IOrcamentoForm) {
-		if (form.outros) {
-			const servico = {
-				nome: form.outros,
-				valor: form.valor,
-			};
-			this.osServicesNew.saveService(servico)
-				.subscribe((res) => {
-					console.log(res);
-				})
-		} else {
+		// if (form.outros) {
+		// 	const servico = {
+		// 		nome: form.outros,
+		// 		valor: form.valor,
+		// 	};
+		// 	this.osServicesNew.saveService(servico)
+		// 		.subscribe((res) => {
+		// 			console.log(res);
+		// 		})
+		// } else {
 			const s = {
 				ServicoId: form.servico,
 				DescricaoServico: form.pecas,
 				ValorServico: form.valor,
 			};
 			this.servicesAdded.push(s);
-		}
+		// }
 	}
 
 	hasServices(form: IOrcamentoForm): boolean {
@@ -151,9 +151,9 @@ export class OsServicesNewComponent implements OnInit {
 		this.orcamentoForm.controls['valor'].patchValue(valor);
 	}
 
-	saveService(ctrl: string) {
-		console.log(this.orcamentoForm.controls[ctrl].value);
-	}
+	// saveService(ctrl: string) {
+	// 	console.log(this.orcamentoForm.controls[ctrl].value);
+	// }
 
 	getCliente(cpfcnpj: string) {
 		this.readonly = false;
