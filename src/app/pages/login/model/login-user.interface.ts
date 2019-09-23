@@ -3,5 +3,6 @@ interface LoginUser {
   authenticatedRole: string;
   authenticatedFrom: string;
   authenticatedTo: string;
+  clientDocument?: string;
   token: string;
 }

@@ -43,8 +43,10 @@ export class OrcamentoListComponent implements OnInit {
   getAllOrders() {
 	this.orcamentoService.getOrcamentos()
 	  .subscribe((orcamentos) => {
-		this.orcamentoList = orcamentos.filter(orcamento => orcamento.carro.cliente.email === this.userEmail);
+		this.orcamentoList = orcamentos;
 		this.render = true;
+	  }, (err) => {
+		this.render = err === null;
 	  })
   }
 

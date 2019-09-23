@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, state, transition, style, animate, keyframes } from '@angular/animations';
 import { IOrcamentoList } from '../../orcamento/orcamento-list/contract/orcamento-list.interface';
 import { DashboardService } from './dashboard.service';
-import { utils } from 'src/app/shared/utils/utils';
+import { utils } from '../../../shared/utils/utils';
 
 @Component({
 	selector: 'app-dashboard',
@@ -60,7 +60,9 @@ export class DashboardComponent implements OnInit {
 					this.submitting = false;
 					this.change(i);
 					if (updated.status === 5) {
-						this.orders.splice(i, 1);
+						setTimeout(() => {
+							this.orders.splice(i, 1);
+						}, 1500)
 					}
 				}
 			})

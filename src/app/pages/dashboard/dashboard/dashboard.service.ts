@@ -13,9 +13,9 @@ export class DashboardService {
 	) { }
 
 	getOrcamentos(): Observable<IOrcamentoList[]> {
-        return this.http.get<IOrcamentoList[]>(`${urls.smart.api}/ordemservico`)
+        return this.http.get<IOrcamentoList[]>(`${urls.smart.api}/ordemservico/buscarporstatus/2,4`)
             .pipe(
-                map(orders => orders.filter(order => order.status === 2 || order.status === 4)),
+                map(orders => orders),
                 catchError(err => throwError(undefined))
             );
 	}
