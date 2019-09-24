@@ -36,10 +36,10 @@
                     <i class="fas fa-tools"></i> &nbsp;
                     <a class="card-link" data-toggle="collapse" data-target="#servicos">serviços a realizar</a>
                     <div class="collapse" id="servicos">
-                            <li class="list-group-item" *ngFor="let servico of order.servicos">
-                                {{ servico.servico.nome }}
+                            <li class="list-group-item mt-2" *ngFor="let servico of order.servicos">
+                                {{ servico.descricaoServico }}
                                 <span class="float-right">
-                                    {{ servico.servico.valor | currency: 'BRL' }}
+                                    {{ servico.valorServico | currency: 'BRL' }}
                                 </span>
                             </li>
                     </div>
