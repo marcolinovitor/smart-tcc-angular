@@ -8,9 +8,7 @@ import { IOrcamentoList } from '../../orcamento/orcamento-list/contract/orcament
 @Injectable()
 export class DashboardService {
 
-	constructor(
-		private http: HttpClient,
-	) { }
+	constructor(private http: HttpClient) { }
 
 	getOrcamentos(): Observable<IOrcamentoList[]> {
         return this.http.get<IOrcamentoList[]>(`${urls.smart.api}/ordemservico/buscarporstatus/2,4`)

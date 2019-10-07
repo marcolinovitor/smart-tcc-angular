@@ -21,11 +21,12 @@ export class OsServicesNewComponent implements OnInit {
 		{ nome: 'Caminhão', codigo: 'caminhoes' },
 	];
 
-	services: Services[] = [{
-		id: 99,
-		nome: 'Outros',
-		valor: 0,
-	}];
+	services: Services[] = [];
+	// services: Services[] = [{
+	// 	id: 99,
+	// 	nome: 'Outros',
+	// 	valor: 0,
+	// }];
 	regexMail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
 	regexPlaca = new RegExp('^[a-zA-Z]{3}[0-9]{4}$');
 
@@ -183,7 +184,9 @@ export class OsServicesNewComponent implements OnInit {
 					this.toastr.success(`Número da OS: ${res.referencia}`, 'Sucesso');
 					this.submitting = false;
 				}
-				this.orcamentoForm.reset('');
+				this.createForm();
+				this.readonly = false;
+				this.servicesAdded = [];
 			}, (err) => {
 				this.toastr.error(`Parece que houve um erro ... `, 'Ops');
 			});
