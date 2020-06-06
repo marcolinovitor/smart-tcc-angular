@@ -1,5 +1,5 @@
 <div class="box-chat" *ngIf="perguntas.length > 0">
     <div *ngFor="let p of perguntas">
-        <app-chat (escolha)="getEscolha($event)" [pergunta]="p"></app-chat>
+        <app-chat (novoAtend)="novoAtendimento($event)" (escolha)="getEscolha($event)" [pergunta]="p"></app-chat>
     </div>
 </div>

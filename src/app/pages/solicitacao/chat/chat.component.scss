@@ -17,14 +17,27 @@
 
 .text-b {
     color: black;
+
+    .des {
+        color: rgb(56, 56, 56);
+        margin-left: 0;
+    }
 }
 
 .radios {
-    margin-left: 13%;
+    margin-left: 10%;
+}
+
+.sel-al {
+    width: 53%;
 }
 
 .client-item {
     padding-bottom: 15px;
     margin-left: 11%;
     background-color: white;
+}
+
+.buttons {
+    margin-bottom: 15px;
 }
