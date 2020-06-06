@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OsServicesService } from './os-services.service';
 import { IStatus } from 'src/app/shared/utils/utils';
+import { OsListResponse } from './model/os-response.interface';
 
 @Component({
   selector: 'app-os-services',

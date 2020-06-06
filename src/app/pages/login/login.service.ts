@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { urls } from 'src/environments/urls';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { SessionService } from 'src/app/shared/session/session.service';
-import { map, catchError } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { LoginUser } from './model/login-user.interface';
 
 export interface Usuario {
     email: string;

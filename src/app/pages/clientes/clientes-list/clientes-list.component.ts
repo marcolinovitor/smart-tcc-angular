@@ -4,6 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { VeiculoCliente } from './model/veiculo-cliente.interface';
 import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
+import { ClienteResponse } from './model/cliente-response.interface';
 
 @Component({
   selector: 'app-clientes-list',
@@ -86,7 +87,7 @@ export class ClientesListComponent implements OnInit {
             this.clientes.splice(this.clientes.indexOf(cliente), 1);
           })
       }, (err) => {
-        console.log(err);
+        this.toastr.error('Houve um erro na sua solicitação', 'Ops!')
       })
   }
 

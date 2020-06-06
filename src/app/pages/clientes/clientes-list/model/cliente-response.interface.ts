@@ -1,4 +1,4 @@
-interface ClienteResponse {
+export interface ClienteResponse {
   nome: string;
   cpfCnpj: string;
   telefone: string;

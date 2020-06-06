@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { SessionService } from 'src/app/shared/session/session.service';
 import { map } from 'rxjs/operators';
 import { utils } from 'src/app/shared/utils/utils';
+import { OsListResponse } from './model/os-response.interface';
 
 @Injectable()
 export class OsServicesService {

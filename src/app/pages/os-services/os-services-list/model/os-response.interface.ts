@@ -1,4 +1,4 @@
-interface OsListResponse {
+export interface OsListResponse {
   status: number;
   aprovacao: boolean;
   referencia: string;
@@ -11,7 +11,7 @@ interface OsListResponse {
   id: number;
 }
 
-interface Servicos {
+export interface Servicos {
   servicoId: number;
   servico: Servico;
   ordemServicoId: number;
@@ -20,13 +20,13 @@ interface Servicos {
   id: number;
 }
 
-interface Servico {
+export interface Servico {
   nome: string;
   valor: number;
   id: number;
 }
 
-interface Carro {
+export interface Carro {
   placa: string;
   modelo: string;
   marca: string;
@@ -35,7 +35,7 @@ interface Carro {
   id: number;
 }
 
-interface Cliente {
+export interface Cliente {
   nome: string;
   cpfCnpj: string;
   telefone: string;

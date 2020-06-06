@@ -1,4 +1,4 @@
-interface LoginUser {
+export interface LoginUser {
   authenticatedUser: string;
   authenticatedRole: string;
   authenticatedFrom: string;

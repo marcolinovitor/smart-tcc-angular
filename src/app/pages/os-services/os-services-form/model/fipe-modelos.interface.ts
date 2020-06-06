@@ -1,14 +1,14 @@
-interface FipeModelos {
+export interface FipeModelos {
   modelos: Modelo[];
   anos: Ano[];
 }
 
-interface Ano {
+export interface Ano {
   nome: string;
   codigo: string;
 }
 
-interface Modelo {
+export interface Modelo {
   nome: string;
   codigo: number;
 }

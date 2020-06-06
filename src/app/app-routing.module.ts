@@ -8,11 +8,11 @@ import { LoginModule } from './pages/login/login.module';
 const routes: Routes = [
   {
     path: 'admin',
-    loadChildren: './pages/admin/admin.module#AdminModule'
+    loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule)
   },
   {
     path: 'login',
-    loadChildren: './pages/login/login.module#LoginModule'
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
   }
 ];
 

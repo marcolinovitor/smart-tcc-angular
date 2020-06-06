@@ -7,6 +7,9 @@ import { map, catchError } from 'rxjs/operators';
 import { Request } from './model/request.interface';
 import { OrcamentoForm, Servico } from './model/orcamento-form.model';
 import { IOrcamentoForm } from './model/orcamento-form.interface';
+import { OsResponse } from './model/os-response.interface';
+import { ClienteResponse } from '../../clientes/clientes-list/model/cliente-response.interface';
+import { FipeModelos } from './model/fipe-modelos.interface';
 
 export interface Services {
     id?: number;
@@ -29,9 +32,12 @@ export class OsServicesNewService {
         return this.http.get<IVehicles[]>(url)
             .pipe(
                 map((res) => {
-                    const list = [];
-                    res.forEach(item => list.push({ codigo: item.codigo, nome: item.nome }))
-                    return list;
+                    return res.map(item => {
+                        return {
+                            codigo: item.codigo,
+                            nome: item.nome,
+                        };
+                    });
                 })
             );
     }

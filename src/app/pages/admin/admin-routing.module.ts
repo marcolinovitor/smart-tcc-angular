@@ -13,22 +13,22 @@ const routes: Routes = [
       {
         path: 'os-services',
         canActivate: [ProfileGuardService],
-        loadChildren: '../os-services/os-services.module#OsServicesModule'
+        loadChildren: () => import('../os-services/os-services.module').then(m => m.OsServicesModule)
       },
       {
         path: 'dashboard',
         canActivate: [ProfileGuardService],
-        loadChildren: '../dashboard/dashboard.module#DashboardModule'
+        loadChildren: () => import('../dashboard/dashboard.module').then(m => m.DashboardModule)
       },
       {
         path: 'clientes',
-        loadChildren: '../clientes/clientes.module#ClientesModule'
+        loadChildren: () => import('../clientes/clientes.module').then(m => m.ClientesModule)
       },
       {
         path: 'orcamentos',
         canActivate: [ClienteGuardService],
         canLoad: [ClienteGuardService],
-        loadChildren: '../orcamento/orcamento.module#OrcamentoModule'
+        loadChildren: () => import('../orcamento/orcamento.module').then(m => m.OrcamentoModule)
       }
     ]
   },

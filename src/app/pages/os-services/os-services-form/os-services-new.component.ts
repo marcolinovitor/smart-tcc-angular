@@ -6,6 +6,7 @@ import { OrcamentoForm } from './model/orcamento-form.model';
 import { utils } from 'src/app/shared/utils/utils';
 import { IOrcamentoForm } from './model/orcamento-form.interface';
 import { ToastrService } from 'ngx-toastr';
+import { ClienteResponse } from '../../clientes/clientes-list/model/cliente-response.interface';
 
 @Component({
 	selector: 'app-os-services-new',

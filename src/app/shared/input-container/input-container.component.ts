@@ -14,8 +14,8 @@ export class InputContainerComponent implements OnInit, AfterContentInit {
   @Input() label: string;
   @Input() errorMessage: string;
 
-  @ContentChild(NgModel, { static: false }) model: NgModel;
-  @ContentChild(FormControlName, { static: false }) control: FormControlName;
+  @ContentChild(NgModel) model: NgModel;
+  @ContentChild(FormControlName) control: FormControlName;
 
   constructor() { }
 
