@@ -56,7 +56,7 @@
 					Reprovar
 				</a>
 			</div>
-			<div *ngIf="submitting && checkOrder(os.referencia)" class="card-body">
+			<div *ngIf="submitting && os.updating" class="card-body">
 				<div class="d-flex align-items-center">
 					<strong>Aguarde ...</strong>
 					<div class="spinner-border ml-auto text-primary" role="status"></div>

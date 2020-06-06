@@ -44,6 +44,7 @@ export class OrcamentoListComponent implements OnInit {
         this.orcamentoService.getOrcamentos()
             .subscribe((orcamentos) => {
                 this.orcamentoList = orcamentos;
+                this.orcamentoList.map(order => order.updating = false);
                 this.render = true;
             }, (err) => {
                 this.render = err === null;
@@ -51,6 +52,7 @@ export class OrcamentoListComponent implements OnInit {
     }
 
     aprovarOrcamento(i: number, status: number, aprovar: boolean) {
+        this.changeStatus(i);
         const ref = this.orcamentoList[i].referencia;
         this.submitting = true;
         this.orcamentoService.aprovarOrcamento(ref, status, aprovar)
@@ -58,15 +60,15 @@ export class OrcamentoListComponent implements OnInit {
                 if (updated) {
                     this.orcamentoList[i].aprovacao = updated.aprovado;
                     this.orcamentoList[i].status = updated.status;
+                    this.changeStatus(i);
                     this.submitting = false;
                 }
             })
     }
 
-      checkOrder(referencia: string): boolean {
-          const item = this.orcamentoList.find((f) => f.referencia === referencia);
-          return referencia === item.referencia;
-      }
+    changeStatus(i: number) {
+        this.orcamentoList[i].updating = !this.orcamentoList[i].updating;
+    }
 
     totalValue(os: IOrcamentoList): number {
         let total = 0;

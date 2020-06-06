@@ -27,12 +27,11 @@ export class ClientesListService {
         return this.http.post<ClienteResponse>(`${this.url}/cliente`, client);
     }
 
-    removeCliente(id: number): Observable<ClienteResponse> {
-        return this.http.delete<ClienteResponse>(`${this.url}/cliente/${id}`)
+    removeCliente(id: number): Observable<{ status: string }> {
+        return this.http.delete<{ status: string }>(`${this.url}/cliente/${id}`)
             .pipe(
                 map((res) => {
-                    console.log(res);
-                    if (res.id)
+                    if (res.status)
                         return res;
                 }),
                 catchError(err => throwError(undefined))

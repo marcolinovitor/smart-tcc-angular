@@ -31,6 +31,7 @@ export class ClientesListComponent implements OnInit {
   state = 'ready';
 
   clientes: ClienteResponse[] = [];
+  cliente: ClienteResponse;
   veiculosCliente: VeiculoCliente[] = [];
   edit = false;
   error: boolean;
@@ -82,13 +83,17 @@ export class ClientesListComponent implements OnInit {
   removeItem(cliente: ClienteResponse) {  
     this.clienteListService.removeCliente(cliente.id)
       .subscribe((res) => {
-        this.toastr.success(`Cliente: ${res.nome}`, 'Removido!')
+        this.toastr.success(`Cliente ${cliente.nome}`, 'Removido!')
           .onShown.subscribe((obs) => {
             this.clientes.splice(this.clientes.indexOf(cliente), 1);
           })
       }, (err) => {
         this.toastr.error('Houve um erro na sua solicitação', 'Ops!')
       })
+  }
+
+  setClient(cliente: ClienteResponse) {
+      this.cliente = cliente;
   }
 
 }
