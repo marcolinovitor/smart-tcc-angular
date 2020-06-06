@@ -1,0 +1,43 @@
+<div *ngIf="!pergunta.isClient" class="row">
+  <div class="item-chat float-left light-b">
+    <div class="col-3">
+      <a href="#" class="float-left image-logo">
+        <img width="70" [src]="'assets/icons/manutencao.svg'" alt="" class="img-circle">
+      </a>
+    </div>
+    <div class="col-12">
+      <strong class="text-success">@SmartMechanical</strong>
+      <p class="text-b">{{ pergunta.pergunta }}</p>
+      <small *ngIf="pergunta.descricao">
+        <p class="text-b des">{{ pergunta.descricao }}</p>
+        <div class="float-right buttons">
+          <button type="button" (click)="novoAtendimento()" class="btn btn-outline-success">Novo</button>
+          &nbsp; &nbsp;
+          <button type="button" (click)="finalizar()" class="btn btn-danger">Encerrar</button>
+        </div>
+      </small>
+      <div *ngIf="pergunta.alternativas" class="radios form-group">
+        <select [disabled]="selected" (change)="setAlternativa($event.target.value)" class="form-control sel-al">
+          <option selected>Selecione</option>
+          <option *ngFor="let alter of pergunta.alternativas" [value]="alter.id">
+            {{ alter.alternativa }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="pergunta.isClient">
+  <div class="item-chat client-item">
+    <div class="col-3">
+      <a href="#" class="float-left image-logo">
+        <img width="70" [src]="'assets/icons/do-utilizador.svg'" alt="" class="img-circle">
+      </a>
+    </div>
+    <div class="col-9">
+      <strong class="text-success">@Você</strong>
+      <p class="text-b">{{ pergunta.pergunta }}</p>
+    </div>
+  </div>
+</div>

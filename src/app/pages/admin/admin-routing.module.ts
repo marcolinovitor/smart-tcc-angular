@@ -29,6 +29,12 @@ const routes: Routes = [
         canActivate: [ClienteGuardService],
         canLoad: [ClienteGuardService],
         loadChildren: () => import('../orcamento/orcamento.module').then(m => m.OrcamentoModule)
+      },
+      {
+        path: 'solicitacoes',
+        canActivate: [ClienteGuardService],
+        canLoad: [ClienteGuardService],
+        loadChildren: () => import('../solicitacao/solicitacao.module').then(m => m.SolicitacaoModule)
       }
     ]
   },
