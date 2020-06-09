@@ -11,7 +11,12 @@
                     <a routerLink="dashboard">Administração</a>
                 </li>
                 <ng-template #customer>
-                    <p>{{ userDescription }}</p>
+                    <li class="nav-item">
+                        <a routerLink="orcamentos">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="meus-carros">Meus carros</a>
+                    </li>
                 </ng-template>
     
                 <li *ngFor="let menu of menuList" class="nav-item">

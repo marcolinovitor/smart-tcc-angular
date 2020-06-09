@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginUser } from 'src/app/pages/login/model/login-user.interface';
+import { ClienteResponse } from 'src/app/pages/clientes/clientes-list/model/cliente-response.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,16 @@ import { LoginUser } from 'src/app/pages/login/model/login-user.interface';
 export class SessionService {
 
   constructor(private route: Router) { }
+
+  saveClientOnSession(cliente: ClienteResponse) {
+      const cli = this.encrypt(cliente);
+      sessionStorage.setItem('cliente', cli);
+  }
+
+  getClienteFromSession(): ClienteResponse {
+      const cliente = sessionStorage.getItem('cliente');
+      return cliente ? this.decrypt(cliente) : undefined;
+  }
 
   saveOnSession(user: LoginUser) {
     const u = this.encrypt(user);
