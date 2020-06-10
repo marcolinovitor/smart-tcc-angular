@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SolicitacaoService } from './solicitacao.service';
 import { PerguntasResponse, Alternativa } from './models/perguntas.interface';
 import { Router } from '@angular/router';
+import { MeusCarrosService } from '../meus-carros/meus-carros.service';
 
 @Component({
     selector: 'app-solicitacao',
@@ -15,12 +16,21 @@ export class SolicitacaoComponent implements OnInit {
     constructor(
         private readonly solicitacaoService: SolicitacaoService,
         private readonly route: Router,
+        private readonly meusCarrosService: MeusCarrosService,
     ) {
         this.perguntas = [];
     }
 
     ngOnInit(): void {
+        // this.getVeiculos();
         this.getPerguntas();
+    }
+
+    getVeiculos(): void {
+        this.meusCarrosService.getClienteVeiculos()
+            .subscribe((veiculos) => {
+                this.perguntas.push(this.solicitacaoService.montarVeiculosChat(veiculos));
+            });
     }
 
     getPerguntas(): void {

@@ -5,6 +5,7 @@ import { SolicitacaoComponent } from './solicitacao.component';
 import { SolicitacaoService } from './solicitacao.service';
 import { CoreModule } from 'src/app/core/core.module';
 import { ChatComponent } from './chat/chat.component';
+import { MeusCarrosService } from '../meus-carros/meus-carros.service';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { ChatComponent } from './chat/chat.component';
   ],
   providers: [
       SolicitacaoService,
+      MeusCarrosService, 
   ]
 })
 export class SolicitacaoModule { }

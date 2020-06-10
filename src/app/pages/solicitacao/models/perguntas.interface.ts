@@ -1,4 +1,5 @@
 import { PreAberturaResponse } from './abertura-os.interface';
+import { MeuVeiculo } from '../../meus-carros/model/meu-veiculo';
 
 export interface Alternativa {
 	alternativa: string;
@@ -32,6 +33,21 @@ export class PerguntasResponse {
         item.isClient = false;
         item.pergunta = preOrdem.assunto;
         item.descricao = preOrdem.descricao;
+        return item;
+    }
+
+    setVeiculos(veiculos: MeuVeiculo[]) {
+        const item = new PerguntasResponse();
+        item.isClient = false;
+        item.pergunta = 'De qual veículo deseja falar?';
+        veiculos.forEach(veiculo => {
+            item.alternativas.push({
+                alternativa: `${veiculo.marca} ${veiculo.modelo}`,
+                id: veiculo.id,
+                perguntaOSId: 0,
+                alternativaFinal: false,
+            });
+        })
         return item;
     }
 }
