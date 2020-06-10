@@ -4,52 +4,54 @@ import { IStatus } from 'src/app/shared/utils/utils';
 import { OsListResponse } from './model/os-response.interface';
 
 @Component({
-  selector: 'app-os-services',
-  templateUrl: './os-services.component.html',
-  styleUrls: ['./os-services.component.scss']
+    selector: 'app-os-services',
+    templateUrl: './os-services.component.html',
+    styleUrls: ['./os-services.component.scss']
 })
 export class OsServicesComponent implements OnInit {
 
-  osList: OsListResponse[] = [];
+    osList: OsListResponse[] = [];
 
-  servicosContratados: OsListResponse;
+    servicosContratados: OsListResponse;
 
-  isAdmin: boolean;
-  error = false;
+    isAdmin: boolean;
+    error = false;
 
-  constructor(
-    private osServices: OsServicesService,
-  ) {
-    this.isAdmin = this.osServices.isAdmin();
-  }
+    constructor(
+        private osServices: OsServicesService,
+    ) {
+        this.isAdmin = this.osServices.isAdmin();
+    }
 
-  ngOnInit() {
-    this.getAllOrders();
-  }
+    ngOnInit() {
+        this.getAllOrders();
+    }
 
-  getAllOrders() {
-    this.osServices.getAllOrders()
-      .subscribe((res) => {        
-        this.osList = res;
-      }, (err) => {
-        this.error = true;
-      })
-  }
+    getAllOrders() {
+        this.osServices.getAllOrders()
+            .subscribe((res) => {
+                this.osList = res;
+            }, (err) => {
+                this.error = true;
+            })
+    }
 
-  getServices(item: OsListResponse) {  
-    this.servicosContratados = item;
-  }
+    getServices(item: OsListResponse) {
+        console.log(item);
+        
+        this.servicosContratados = item;
+    }
 
-  totalValue(item: OsListResponse): number {
-    let soma = 0;
-    item.servicos.forEach((servico) => {
-      soma += servico.valorServico;
-    })
-    return soma;
-  }
+    totalValue(item: OsListResponse): number {
+        let soma = 0;
+        item.servicos.forEach((servico) => {
+            soma += servico.valorServico;
+        })
+        return soma;
+    }
 
-  setStatus(status: number) {
-    return this.osServices.setStatus(status);
-  }
+    setStatus(status: number) {
+        return this.osServices.setStatus(status);
+    }
 
 }

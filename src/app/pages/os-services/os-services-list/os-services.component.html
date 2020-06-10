@@ -47,51 +47,53 @@
 </div>
 
 <app-modal size="modal-lg" modalName="servicos" titleText="Serviços Contratados">
-	<div *ngIf="servicosContratados" class="wrapper">
-		<div class="row">
-			<div class="col-md-6">
-				<label for="relatado">
-					<strong>Problema Relatado</strong>
-				</label>
-				<br>
-				<span id="relatado">
-					{{ servicosContratados.problemaRelatado }}
-				</span>
-			</div>
-			<div class="col-md-6">
-				<label for="diagnosticado">
-					<strong>Problema Diagnosticado</strong>
-				</label>
-				<br>
-				<span id="diagnosticado">
-					{{ servicosContratados.problemaDescrito }}
-				</span>
-			</div>
-		</div>
-		<div class="row mt-4">
-			<div class="col-md-12">
-				<label for="carro">
-					<strong>Veículo</strong>
-				</label>
-				<br>
-				<span id="carro">{{ servicosContratados.carro.marca }} | {{ servicosContratados.carro.modelo }}</span>
-			</div>
-		</div>
-		<div class="row">
-			<table class="table mt-4">
-				<thead>
-					<tr>
-						<th>Descrição</th>
-						<th>Valor</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr *ngFor="let servicos of servicosContratados.servicos">
-						<td>{{ servicos.servico.nome }}</td>
-						<td>{{ servicos.valorServico | currency: 'BRL' }}</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
+    <div body>
+        <div *ngIf="servicosContratados" class="wrapper">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="relatado">
+                        <strong>Problema Relatado</strong>
+                    </label>
+                    <br>
+                    <span id="relatado">
+                        {{ servicosContratados.problemaRelatado }}
+                    </span>
+                </div>
+                <div class="col-md-6">
+                    <label for="diagnosticado">
+                        <strong>Problema Diagnosticado</strong>
+                    </label>
+                    <br>
+                    <span id="diagnosticado">
+                        {{ servicosContratados.problemaDescrito }}
+                    </span>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <label for="carro">
+                        <strong>Veículo</strong>
+                    </label>
+                    <br>
+                    <span id="carro">{{ servicosContratados.carro.marca }} | {{ servicosContratados.carro.modelo }}</span>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table mt-4">
+                    <thead>
+                        <tr>
+                            <th>Descrição</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let servicos of servicosContratados.servicos">
+                            <td>{{ servicos.servico.nome }}</td>
+                            <td>{{ servicos.valorServico | currency: 'BRL' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </app-modal>
