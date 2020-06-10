@@ -3,13 +3,16 @@
 
 <h2>Meus carros</h2>
 
-<div *ngIf="!veiculos.length && !error" class="d-flex justify-content-center">
+<div *ngIf="spinner && !error" class="d-flex justify-content-center">
   <div class="spinner-border" role="status"></div>
 </div>
 <div *ngIf="error" class="d-flex justify-content-center">
   <i class="pi pi-ban"></i>
   <br>
   <span>Houver um erro inesperado. Tente novamente mais tarde</span>
+</div>
+<div *ngIf="!veiculos.length && !spinner" class="float-left">
+    <span>Não existem veículos cadastrados</span>
 </div>
 <div *ngIf="veiculos.length" class="wrapper">
 

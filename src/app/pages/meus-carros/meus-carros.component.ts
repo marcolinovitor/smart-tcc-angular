@@ -26,6 +26,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class MeusCarrosComponent implements OnInit {
 
+    spinner = true;
     error = false;
     veiculos: MeuVeiculo[] = [];
     veiculo: MeuVeiculo;
@@ -43,9 +44,14 @@ export class MeusCarrosComponent implements OnInit {
     }
 
     getMeusCarros(): void {
+        this.spinner = true;
         this.meusCarrosService.getClienteVeiculos()
             .subscribe(result => {
                 this.veiculos = result;
+            }, (err) => {
+                console.log(err);
+            }, () => {
+                this.spinner = false;
             })
     }
 
@@ -70,7 +76,7 @@ export class MeusCarrosComponent implements OnInit {
             .subscribe(result => {
                 this.veiculos.splice(this.veiculos.indexOf(this.veiculo), 1);
             }, err => {
-                console.log(err)
+                //
             }, () => {
                 this.toastr.success('Veículo removido com sucesso');
             })
