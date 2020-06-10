@@ -1,42 +1,41 @@
-<!-- <form> -->
-<div class="row">
-  <div class="form-group col-md-2">
-    <label for="tipo">Tipo</label>
-    <!-- <select (change)="getVehicles($event.target.value)" id="tipo" class="form-control"> -->
-    <select id="tipo" class="form-control">
-      <option selected>Selecione</option>
-      <!-- <option *ngFor="let t of tipos" [value]="t.codigo">
-        {{ t.nome }}
-      </option> -->
-    </select>
+<form [formGroup]="veiculosForm">
+  <div class="row">
+    <div class="form-group col-md-2">
+      <label for="tipo">Tipo</label>
+      <select (change)="getVeiculos($event.target.value)" id="tipo" class="form-control">
+        <option selected>Selecione</option>
+        <option *ngFor="let t of tipos" [value]="t.codigo">
+          {{ t.nome }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group col-md-2">
+      <label for="marca">Marca</label>
+      <select formControlName="marca" (change)="getVeiculosPorMarca($event.target.value)" id="marca"
+        class="form-control">
+        <option *ngFor="let v of marcasVeiculos" [value]="v.codigo">
+          {{ v.nome }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="modelo">Modelo</label>
+      <select formControlName="modelo" id="modelo" class="form-control">
+        <option *ngFor="let v of nomesVeiculos" [value]="v.codigo">
+          {{ v.nome }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group col-md-2">
+      <label for="placa">Placa</label>
+      <input [ngClass]="{'is-valid': isValid('placa'), 'is-invalid': isInvalid('placa')}" formControlName="placa"
+        type="text" class="form-control" id="placa" placeholder="Informe a placa">
+    </div>
   </div>
-  <div class="form-group col-md-2">
-    <label for="marca">Marca</label>
-    <!-- <select formControlName="marca" (change)="getVehiclesByBrand($event.target.value)" id="marca" class="form-control"> -->
-    <select id="marca" class="form-control">
-      <option selected>Selecione</option>
-      <!-- <option *ngFor="let v of vehiclesBrands" [value]="v.codigo">
-        {{ v.nome }}
-      </option> -->
-    </select>
+  <div class="row">
+    <div class="form-group col-md-3 float-right">
+      <button [disabled]="veiculosForm.invalid" (click)="salvarVeiculo(veiculosForm)" type="submit"
+        class="btn btn-primary btn-block">Salvar</button>
+    </div>
   </div>
-  <div class="form-group col-md-6">
-    <label for="modelo">Modelo</label>
-    <select formControlName="modelo" id="modelo" class="form-control">
-      <option selected>Selecione</option>
-      <!-- <option *ngFor="let v of vehiclesName" [value]="v.codigo">
-        {{ v.nome }}
-      </option> -->
-    </select>
-  </div>
-  <div class="form-group col-md-2">
-    <label for="placa">Placa</label>
-    <input type="text" class="form-control" id="placa" placeholder="Informe a placa">
-  </div>
-</div>
-<div class="row">
-  <div class="form-group col-md-3 float-right">
-    <button type="submit" class="btn btn-primary btn-block">Salvar</button>
-  </div>
-</div>
-<!-- </form> -->
+</form>

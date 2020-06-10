@@ -1,3 +1,54 @@
-<h2>Meus carros</h2>
 <hr>
-<app-meu-carro-form></app-meu-carro-form>
+<app-meu-carro-form (novoVeiculo)="cadastrarVeiculo($event)"></app-meu-carro-form>
+
+<h2>Meus carros</h2>
+
+<div *ngIf="!veiculos.length && !error" class="d-flex justify-content-center">
+  <div class="spinner-border" role="status"></div>
+</div>
+<div *ngIf="error" class="d-flex justify-content-center">
+  <i class="pi pi-ban"></i>
+  <br>
+  <span>Houver um erro inesperado. Tente novamente mais tarde</span>
+</div>
+<div *ngIf="veiculos.length" class="wrapper">
+
+  <table class="table table-striped table-responsive-md">
+    <thead>
+      <tr>
+        <th scope="col">Marca</th>
+        <th scope="col">Modelo</th>
+        <th scope="col">Placa</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr [@row]="state" *ngFor="let veiculo of veiculos; let i = index">
+        <td>
+          {{ veiculo.marca }}
+        </td>
+        <td>
+          {{ veiculo.modelo }}
+        </td>
+        <td>
+          {{ veiculo.placa }}
+        </td>
+        <td>
+          <a (click)="setVeiculo(veiculo)" class="editable" data-toggle="modal" data-target="#excluirVeiculo">
+            <i class="pi pi-trash"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-modal size="modal-md" modalName="excluirVeiculo" [titleText]="titleModal">
+  <div body>
+    <p *ngIf="veiculo">Confirma a exclusão de {{ veiculo.modelo }}?</p>
+  </div>
+  <div footer class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+    <button type="button" data-dismiss="modal" (click)="removeVeiculo()" class="btn btn-primary">Confimar</button>
+  </div>
+</app-modal>
