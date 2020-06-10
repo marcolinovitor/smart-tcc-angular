@@ -66,6 +66,9 @@ geDate() {
     return `${week[date.getDay()]}, ${date.getDate()} de ${months[date.getMonth()]} de ${date.getUTCFullYear()}`
 }
 
+getCliente() {
+    return this.sessionService.getClienteFromSession();
+}
 
 getUserProfile() {
     return this.sessionService.getFromSession();
@@ -83,7 +86,7 @@ welcomeUser() {
   const hour = new Date().getHours();
   const good = (hour < 12) ? 'Bom dia' : (hour > 12 && hour < 18) ? 'Boa tarde' : 'Boa noite';
   
-  return `${good}, ${this.getUserProfile().authenticatedUser}`;
+  return `${good}, ${this.getCliente().nome}`;
 }
 
 profileDescription(): string {

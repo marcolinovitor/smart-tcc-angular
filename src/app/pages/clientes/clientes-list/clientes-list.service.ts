@@ -22,6 +22,10 @@ export class ClientesListService {
         return this.http.get<ClienteResponse>(`${this.url}/cliente/${cpf}`);
     }
 
+    getClienteByEmail(email: string): Observable<ClienteResponse> {
+        return this.http.get<ClienteResponse>(`${this.url}/cliente/GetByEmail/${email}`);
+    }
+
     saveCliente(cliente: ICliente): Observable<ClienteResponse> {
         const client = Object.assign({ oficinaId: 1, perfilSistema: 'customer' }, cliente) as ICliente;
         return this.http.post<ClienteResponse>(`${this.url}/cliente`, client);
