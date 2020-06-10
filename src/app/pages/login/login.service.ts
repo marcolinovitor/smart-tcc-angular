@@ -35,7 +35,13 @@ export class LoginService {
                         return true;
                     }
                 }),
-                tap(() => this.getClienteAndSave(user.email, isMecanico)),
+                tap(() => {
+                    if (!isMecanico) {
+                        this.getClienteAndSave(user.email, isMecanico)
+                    } else {
+                        this.route.navigate([`admin${isMecanico ? '/dashboard' : '/orcamentos'}`]);
+                    }
+                }),
             );
     }
 
@@ -46,7 +52,7 @@ export class LoginService {
             }, () => {
                 //
             }, () => {
-                this.route.navigate([`admin${isMecanico ? '/dashboard': '/orcamentos'}`]);
+                this.route.navigate([`admin${isMecanico ? '/dashboard' : '/orcamentos'}`]);
             });
     }
 }
