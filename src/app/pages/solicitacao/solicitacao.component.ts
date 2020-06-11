@@ -57,19 +57,27 @@ export class SolicitacaoComponent implements OnInit {
         this.showMsg = true;
         const model = new PerguntasResponse();
         if (alter.perguntaOSId === 0) {
-            this.idCarro = alter.idCarro;
-            this.perguntas.push(model.setClienteEscolha(alter));
-            this.getPerguntas();
+            this.inicioChat(alter, model);
         } else {
-            const idProximaPergunta = alter.proximaPerguntaOSId;
-            this.perguntas.push(model.setClienteEscolha(alter));
-            this.scrollCol();
-            if (alter.alternativaFinal) {
-                const tipoPre = alter.preAberturaOSId;
-                this.getPreOrdem(tipoPre);
-            } else {
-                this.getNovaPergunta(idProximaPergunta);
-            }
+            this.chatFlow(alter, model);
+        }
+    }
+
+    inicioChat(alter: Alternativa, model: PerguntasResponse) {
+        this.idCarro = alter.idCarro;
+        this.perguntas.push(model.setClienteEscolha(alter));
+        this.getPerguntas();
+    }
+
+    chatFlow(alter: Alternativa, model: PerguntasResponse) {
+        const idProximaPergunta = alter.proximaPerguntaOSId;
+        this.perguntas.push(model.setClienteEscolha(alter));
+        this.scrollCol();
+        if (alter.alternativaFinal) {
+            const tipoPre = alter.preAberturaOSId;
+            this.getPreOrdem(tipoPre);
+        } else {
+            this.getNovaPergunta(idProximaPergunta);
         }
     }
 
