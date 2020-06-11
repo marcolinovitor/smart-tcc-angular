@@ -12,6 +12,9 @@ import { MeusCarrosService } from '../meus-carros/meus-carros.service';
 export class SolicitacaoComponent implements OnInit {
 
     perguntas: PerguntasResponse[];
+    hasVeiculos = false;
+    showMsg = false;
+    idCarro: number;
 
     constructor(
         private readonly solicitacaoService: SolicitacaoService,
@@ -22,42 +25,59 @@ export class SolicitacaoComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // this.getVeiculos();
-        this.getPerguntas();
+        this.getVeiculos();
     }
 
     getVeiculos(): void {
+        this.perguntas = [];
         this.meusCarrosService.getClienteVeiculos()
             .subscribe((veiculos) => {
+                this.hasVeiculos = true;
                 this.perguntas.push(this.solicitacaoService.montarVeiculosChat(veiculos));
+            }, () => {
+                this.hasVeiculos = false;
+                this.cadastrarVeiculo();
+                // this.getPerguntas();
             });
     }
 
+    cadastrarVeiculo() {
+        this.perguntas.push(this.solicitacaoService.sugerirCadastro());
+    }
+
     getPerguntas(): void {
-        this.perguntas = [];
-        this.solicitacaoService.inicializarPerguntas()
+        this.solicitacaoService.inicializarPerguntas(this.hasVeiculos)
             .subscribe(result => {
                 this.perguntas.push(result);
+                this.showMsg = false;
             })
     }
 
     getEscolha(alter: Alternativa) {
+        this.showMsg = true;
         const model = new PerguntasResponse();
-        const idProximaPergunta = alter.proximaPerguntaOSId;
-        this.perguntas.push(model.setClienteEscolha(alter));
-        this.scrollCol();
-        if (alter.alternativaFinal) {
-            const tipoPre = alter.preAberturaOSId;
-            this.getPreOrdem(tipoPre);
+        if (alter.perguntaOSId === 0) {
+            this.idCarro = alter.idCarro;
+            this.perguntas.push(model.setClienteEscolha(alter));
+            this.getPerguntas();
         } else {
-            this.getNovaPergunta(idProximaPergunta);
+            const idProximaPergunta = alter.proximaPerguntaOSId;
+            this.perguntas.push(model.setClienteEscolha(alter));
+            this.scrollCol();
+            if (alter.alternativaFinal) {
+                const tipoPre = alter.preAberturaOSId;
+                this.getPreOrdem(tipoPre);
+            } else {
+                this.getNovaPergunta(idProximaPergunta);
+            }
         }
     }
 
     getNovaPergunta(id): void {
         this.solicitacaoService.proximaPergunta(id)
-            .subscribe((result) => {
+            .subscribe((result) => {                
                 this.perguntas.push(result);
+                this.showMsg = false;
             }, (err) => {
                 // console.log('err', err);
             }, () => {
@@ -65,8 +85,8 @@ export class SolicitacaoComponent implements OnInit {
             });
     }
 
-    getPreOrdem(tipo): void {
-        this.solicitacaoService.abrirPreOrdem(tipo)
+    getPreOrdem(preAberturaOSId): void {
+        this.solicitacaoService.abrirPreOrdem(preAberturaOSId, this.idCarro)
             .subscribe((result) => {
                 const model = new PerguntasResponse();
                 this.perguntas.push(model.setEncerramento(result));
@@ -83,6 +103,10 @@ export class SolicitacaoComponent implements OnInit {
         } else {
             this.route.navigate(['admin/orcamentos']);
         }
+    }
+
+    goToVeiculos() {
+        this.route.navigate(['admin/meus-carros']);
     }
 
     private scrollCol(): void {

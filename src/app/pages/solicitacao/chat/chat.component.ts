@@ -12,6 +12,7 @@ export class ChatComponent implements OnChanges {
     @Input() pergunta: PerguntasResponse;
     @Output() escolha = new EventEmitter<Alternativa>();
     @Output() novoAtend = new EventEmitter<boolean>();
+    @Output() novoCarro = new EventEmitter<boolean>();
 
     constructor() { }
 
@@ -23,6 +24,10 @@ export class ChatComponent implements OnChanges {
         this.selected = true;
         const alternativa = this.pergunta.alternativas.find(f => f.id == id);
         this.escolha.emit(alternativa);
+    }
+
+    cadastrar() {
+        this.novoCarro.emit(true);
     }
 
     novoAtendimento() {

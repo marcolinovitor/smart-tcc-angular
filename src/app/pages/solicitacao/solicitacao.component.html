@@ -1,7 +1,11 @@
 <div class="col-12">
-    <div class="box-chat" *ngIf="perguntas.length > 0">
-        <div *ngFor="let p of perguntas">
-            <app-chat (novoAtend)="novoAtendimento($event)" (escolha)="getEscolha($event)" [pergunta]="p"></app-chat>
-        </div>
+  <div class="box-chat" *ngIf="perguntas.length > 0">
+    <div *ngFor="let pergunta of perguntas">
+      <app-chat (novoCarro)="goToVeiculos()" (novoAtend)="novoAtendimento($event)" (escolha)="getEscolha($event)"
+        [pergunta]="pergunta"></app-chat>
     </div>
+  </div>
+  <div *ngIf="showMsg" class="row">
+    <small class="digitando"><strong>@SmartMechanical</strong> está digitando ...</small>
+  </div>
 </div>

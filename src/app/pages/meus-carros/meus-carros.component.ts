@@ -49,7 +49,7 @@ export class MeusCarrosComponent implements OnInit {
             .subscribe(result => {
                 this.veiculos = result;
             }, (err) => {
-                console.log(err);
+                this.spinner = false;
             }, () => {
                 this.spinner = false;
             })

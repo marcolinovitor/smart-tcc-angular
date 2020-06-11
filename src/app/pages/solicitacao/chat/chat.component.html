@@ -8,10 +8,11 @@
     <div class="col-12">
       <strong class="text-success">@SmartMechanical</strong>
       <p class="text-b">{{ pergunta.pergunta }}</p>
-      <small *ngIf="pergunta.descricao">
-        <p class="text-b des">{{ pergunta.descricao }}</p>
+      <small *ngIf="pergunta.descricao || pergunta.sugerirCadastro">
+        <p class="text-b des">{{ pergunta?.descricao }}</p>
         <div class="float-right buttons">
-          <button type="button" (click)="novoAtendimento()" class="btn btn-outline-success">Novo</button>
+          <button *ngIf="!pergunta.sugerirCadastro" type="button" (click)="novoAtendimento()" class="btn btn-outline-success">Novo</button>
+          <button *ngIf="pergunta.sugerirCadastro" type="button" (click)="cadastrar()" class="btn btn-primary">Cadastrar</button>
           &nbsp; &nbsp;
           <button type="button" (click)="finalizar()" class="btn btn-danger">Encerrar</button>
         </div>
