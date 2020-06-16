@@ -31,7 +31,21 @@
         </div>
     </div>
     <hr>
-    <div class="form-row">
+    <div *ngIf="preOrdem" class="form-row">
+        <div class="form-group col-md-2">
+            <label for="veic">Marca do veículo</label>
+            <input id="veic" class="form-control" [disabled]="true" type="text" [value]="preOrdem.carro.marca">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="model">Modelo do veículo</label>
+            <input id="model" class="form-control" [disabled]="true" type="text" [value]="preOrdem.carro.modelo">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="plac">Marca do veículo</label>
+            <input id="plac" class="form-control" [disabled]="true" type="text" [value]="preOrdem.carro.placa">
+        </div>
+    </div>
+    <div *ngIf="!preOrdem" class="form-row">
         <div class="form-group col-md-2">
             <label for="tipo">Tipo do veículo</label>
             <select (change)="getVehicles($event.target.value)" id="tipo" class="form-control">

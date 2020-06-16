@@ -10,40 +10,40 @@ import { OsListResponse } from './model/os-response.interface';
 @Injectable()
 export class OsServicesService {
 
-  private url = urls.smart.api;
+    private url = urls.smart.api;
 
-  constructor(
-    private readonly http: HttpClient,
-    private readonly sessionService: SessionService,
-  ) { }
+    constructor(
+        private readonly http: HttpClient,
+        private readonly sessionService: SessionService,
+    ) { }
 
-  getAllOrders(): Observable<OsListResponse[]> {
-    return this.http.get<OsListResponse[]>(`${this.url}/ordemservico`)
-      .pipe(
-        map((oslist) => {
-          if (this.isAdmin()) return oslist;
-          else {
-            const list = [];
-            oslist.forEach((item) => {
-              if (item.carro.cliente.email === this.userEmail()) {
-                list.push(item);
-              }
-            })
-            return list;
-          }
-        })
-      );
-  }
+    getAllOrders(): Observable<OsListResponse[]> {
+        return this.http.get<OsListResponse[]>(`${this.url}/ordemservico`)
+            .pipe(
+                map((oslist) => {
+                    if (this.isAdmin()) return oslist;
+                    else {
+                        const list = [];
+                        oslist.forEach((item) => {
+                            if (item.carro.cliente.email === this.userEmail()) {
+                                list.push(item);
+                            }
+                        })
+                        return list;
+                    }
+                })
+            );
+    }
 
-  setStatus(id: number) {
-    return utils.statusOs(id);
-  }
+    setStatus(id: number) {
+        return utils.statusOs(id);
+    }
 
-  isAdmin(): boolean {
-    return this.sessionService.getFromSession().authenticatedRole === 'Mecanico';
-  }
+    isAdmin(): boolean {
+        return this.sessionService.getFromSession().authenticatedRole === 'Mecanico';
+    }
 
-  userEmail(): string {
-    return this.sessionService.getFromSession().authenticatedUser;
-  }
+    userEmail(): string {
+        return this.sessionService.getFromSession().authenticatedUser;
+    }
 }

@@ -31,6 +31,7 @@ export class AdminService {
                 subMenu: [
                     { desc: 'Consultar', path: 'os-services' },
                     { desc: 'Nova Ordem de Serviço', path: 'os-services/new' },
+                    { desc: 'Solicitações', path: 'admin-solicitacoes' },
                 ],
             },
             {

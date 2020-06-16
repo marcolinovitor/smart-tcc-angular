@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { urls } from 'src/environments/urls';
 import { IVehicles } from './model/vehicles.model';
 import { map, catchError } from 'rxjs/operators';
 import { Request } from './model/request.interface';
-import { OrcamentoForm, Servico } from './model/orcamento-form.model';
-import { IOrcamentoForm } from './model/orcamento-form.interface';
+import { OrcamentoForm } from './model/orcamento-form.model';
 import { OsResponse } from './model/os-response.interface';
 import { ClienteResponse } from '../../clientes/clientes-list/model/cliente-response.interface';
 import { FipeModelos } from './model/fipe-modelos.interface';
+import { PreOrdemModel } from '../../admin-solicitacoes/models/pre-ordem.model';
+import { Router } from '@angular/router';
+import { SessionService } from 'src/app/shared/session/session.service';
 
 export interface Services {
     id?: number;
@@ -19,12 +21,16 @@ export interface Services {
 
 @Injectable()
 export class OsServicesNewService {
-  
+
     private urlFipe = urls.fipe.api;
     private urlApi = urls.smart.api;
     private tipo: string;
 
-    constructor(private http: HttpClient) { }
+    constructor(
+        private readonly http: HttpClient,
+        private readonly sessionService: SessionService,
+        private readonly router: Router,
+    ) { }
 
     getVehicles(tipo: string): Observable<IVehicles[]> {
         this.tipo = tipo;
@@ -80,10 +86,37 @@ export class OsServicesNewService {
         return this.http.post<T>(url, servico);
     }
 
-    saveOsService(form: OrcamentoForm): Observable<OsResponse> {       
+    saveOsService(form: OrcamentoForm): Observable<OsResponse> {
         const url = `${this.urlApi}/ordemServico`
         const request = this.createRequest(form);
         return this.http.post<OsResponse>(url, request);
+    }
+
+    setPreOrdemAndGo(preOrdem: PreOrdemModel): void {
+        this.setPreOrdem(preOrdem)
+            .then(() => {
+                this.router.navigate(['admin/os-services/new']);
+            })
+    }
+
+    getPreOrdem(): PreOrdemModel {
+        return this.sessionService.getPreOrdemFromSesseion();
+    }
+
+    setPreOrdem(preOrdem: PreOrdemModel): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.sessionService.savePreOrdem(preOrdem);
+            resolve();
+        })
+    }
+
+    clearPreOrdem() {
+        this.sessionService.clearPreOrdem();
+    }
+
+    deletePreOrdem(referencia: number): void {
+        this.http.delete(`${this.urlApi}/PreOrdemServico/${referencia}`)
+            .subscribe()
     }
 
     private createRequest(form: OrcamentoForm): Request {

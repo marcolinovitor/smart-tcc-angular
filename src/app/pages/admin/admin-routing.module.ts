@@ -41,6 +41,11 @@ const routes: Routes = [
         canActivate: [ClienteGuardService],
         canLoad: [ClienteGuardService],
         loadChildren: () => import('../meus-carros/meus-carros.module').then(m => m.MeusCarrosModule)
+      },
+      {
+        path: 'admin-solicitacoes',
+        canActivate: [ProfileGuardService],
+        loadChildren: () => import('../admin-solicitacoes/admin-solicitacoes.module').then(m => m.AdminSolicitacoesModule)
       }
     ]
   },

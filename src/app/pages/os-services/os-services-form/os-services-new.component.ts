@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OsServicesNewService, Services } from './os-services-new.service';
 import { IVehicles } from './model/vehicles.model';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
@@ -7,223 +7,256 @@ import { utils } from 'src/app/shared/utils/utils';
 import { IOrcamentoForm } from './model/orcamento-form.interface';
 import { ToastrService } from 'ngx-toastr';
 import { ClienteResponse } from '../../clientes/clientes-list/model/cliente-response.interface';
+import { PreOrdemModel } from '../../admin-solicitacoes/models/pre-ordem.model';
 
 @Component({
-	selector: 'app-os-services-new',
-	templateUrl: './os-services-new.component.html',
-	styleUrls: ['./os-services-new.component.scss']
+    selector: 'app-os-services-new',
+    templateUrl: './os-services-new.component.html',
+    styleUrls: ['./os-services-new.component.scss']
 })
 
-export class OsServicesNewComponent implements OnInit {
+export class OsServicesNewComponent implements OnInit, OnDestroy {
 
-	tipos: IVehicles[] = [
-		{ nome: 'Carro', codigo: 'carros' },
-		{ nome: 'Moto', codigo: 'motos' },
-		{ nome: 'Caminhão', codigo: 'caminhoes' },
-	];
+    tipos: IVehicles[] = [
+        { nome: 'Carro', codigo: 'carros' },
+        { nome: 'Moto', codigo: 'motos' },
+        { nome: 'Caminhão', codigo: 'caminhoes' },
+    ];
 
-	services: Services[] = [];
-	// services: Services[] = [{
-	// 	id: 99,
-	// 	nome: 'Outros',
-	// 	valor: 0,
-	// }];
-	regexMail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
-	regexPlaca = new RegExp('^[a-zA-Z]{3}[0-9]{4}$');
+    services: Services[] = [];
 
-	vehiclesBrands: IVehicles[] = [];
-	vehiclesName: IVehicles[] = [];
+    regexMail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+    regexPlaca = new RegExp('^[a-zA-Z]{3}[0-9]{4}$');
 
-	servicesAdded = [];
+    vehiclesBrands: IVehicles[] = [];
+    vehiclesName: IVehicles[] = [];
 
-	optCurrency = {
-		align: "right",
-		allowNegative: true,
-		allowZero: true,
-		decimal: ",",
-		precision: 2,
-		prefix: "R$ ",
-		suffix: "",
-		thousands: ".",
-		nullable: true
-	};
+    servicesAdded = [];
 
-	orcamentoForm: FormGroup;
-	submitting: boolean;
-	newService: boolean;
-	readonly: boolean;
+    preOrdem: PreOrdemModel;
 
-	constructor(
-		private osServicesNew: OsServicesNewService,
-		private fb: FormBuilder,
-		private toastr: ToastrService,
-	) {
-		this.listServices();
-	}
+    optCurrency = {
+        align: "right",
+        allowNegative: true,
+        allowZero: true,
+        decimal: ",",
+        precision: 2,
+        prefix: "R$ ",
+        suffix: "",
+        thousands: ".",
+        nullable: true
+    };
 
-	ngOnInit() {
-		this.createForm();
-	}
+    orcamentoForm: FormGroup;
+    submitting: boolean;
+    newService: boolean;
+    readonly: boolean;
 
-	listServices() {
-		this.osServicesNew.getServices()
-			.subscribe(res => {
-				this.services = this.services.concat(res);
-			});
-	}
+    constructor(
+        private osServicesNew: OsServicesNewService,
+        private fb: FormBuilder,
+        private toastr: ToastrService,
+    ) {
+        this.listServices();
+        this.createForm();
+    }
 
-	createForm() {
-		this.orcamentoForm = this.fb.group({
-			marca: [{ value: '', disabled: true }, [Validators.required]],
-			modelo: [{ value: '', disabled: true }, [Validators.required]],
-			placa: ['', [Validators.required, Validators.pattern(this.regexPlaca), Validators.minLength(7), Validators.maxLength(7)]],
-			cpfcnpj: ['', [Validators.required, this.documentDomainValidator]],
-			nome: ['', [Validators.required]],
-			fone: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
-			email: ['', [Validators.required, Validators.pattern(this.regexMail)]],
-			relatado: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500)]],
-			diagnosticado: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500)]],
-			servico: ['', [Validators.required]],
-			pecas: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30)]],
-			valor: ['', [Validators.required, Validators.min(1)]],
-			outros: [''],
-		});
-	}
+    ngOnInit() {
+        if (this.osServicesNew.getPreOrdem()) {
+            this.preOrdem = this.osServicesNew.getPreOrdem();
+            this.formByPreOrdem();
+        }
+    }
 
-	getVehicles(tipo: string) {
-		this.vehiclesBrands = [];
-		this.vehiclesName = [];
-		this.osServicesNew.getVehicles(tipo)
-			.subscribe((result) => {
-				this.vehiclesBrands = result;
-			}, (err) => {
-				console.log(err);
-			}, () => {
-				this.orcamentoForm.controls['marca'].enable();
-			})
-	}
+    ngOnDestroy() {
+        this.osServicesNew.clearPreOrdem();
+    }
 
-	getVehiclesByBrand(marca: number) {
-		this.osServicesNew.getVehiclesName(marca)
-			.subscribe((result) => {
-				this.vehiclesName = result;
-			}, (err) => {
-				console.log(err);
-			}, () => {
-				this.orcamentoForm.controls['modelo'].enable();
-			})
-	}
+    listServices() {
+        this.osServicesNew.getServices()
+            .subscribe(res => {
+                this.services = this.services.concat(res);
+            });
+    }
 
-	addService(form: IOrcamentoForm) {
-		// if (form.outros) {
-		// 	const servico = {
-		// 		nome: form.outros,
-		// 		valor: form.valor,
-		// 	};
-		// 	this.osServicesNew.saveService(servico)
-		// 		.subscribe((res) => {
-		// 			console.log(res);
-		// 		})
-		// } else {
-			const s = {
-				ServicoId: form.servico,
-				DescricaoServico: form.pecas,
-				ValorServico: form.valor,
-			};
-			this.servicesAdded.push(s);
-		// }
-	}
+    createForm() {
+        this.orcamentoForm = this.fb.group({
+            marca: [{ value: '', disabled: true }, [Validators.required]],
+            modelo: [{ value: '', disabled: true }, [Validators.required]],
+            placa: ['', [Validators.required, Validators.pattern(this.regexPlaca), Validators.minLength(7), Validators.maxLength(7)]],
+            cpfcnpj: ['', [Validators.required, this.documentDomainValidator]],
+            nome: ['', [Validators.required]],
+            fone: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
+            email: ['', [Validators.required, Validators.pattern(this.regexMail)]],
+            relatado: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500)]],
+            diagnosticado: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500)]],
+            servico: ['', [Validators.required]],
+            pecas: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30)]],
+            valor: ['', [Validators.required, Validators.min(1)]],
+            outros: [''],
+        });
+    }
 
-	hasServices(form: IOrcamentoForm): boolean {
-		return !!(form.servico && form.valor && form.pecas);
-	}
+    formByPreOrdem() {
+        this.orcamentoForm.controls['cpfcnpj'].patchValue(this.preOrdem.clienteCpf);
+        this.orcamentoForm.controls['cpfcnpj'].disable();
+        this.orcamentoForm.controls['relatado'].patchValue(this.preOrdem.problemaRelatado);
+        this.orcamentoForm.controls['diagnosticado'].patchValue(this.preOrdem.problemaDescrito);
+        this.orcamentoForm.controls['marca'].patchValue(this.preOrdem.carro.marca);
+        this.orcamentoForm.controls['modelo'].patchValue(this.preOrdem.carro.modelo);
+        this.orcamentoForm.controls['placa'].patchValue(this.preOrdem.carro.placa);
+        this.getCliente('cpfcnpj');
+    }
 
-	serviceName(id): string {
-		return this.services.find(f => f.id == id).nome;
-	}
+    getVehicles(tipo: string) {
+        this.vehiclesBrands = [];
+        this.vehiclesName = [];
+        this.osServicesNew.getVehicles(tipo)
+            .subscribe((result) => {
+                this.vehiclesBrands = result;
+            }, (err) => {
+                console.log(err);
+            }, () => {
+                this.orcamentoForm.controls['marca'].enable();
+            })
+    }
 
-	removeItem(index: number) {
-		this.servicesAdded.splice(index, 1);
-	}
+    getVehiclesByBrand(marca: number) {
+        this.osServicesNew.getVehiclesName(marca)
+            .subscribe((result) => {
+                this.vehiclesName = result;
+            }, (err) => {
+                console.log(err);
+            }, () => {
+                this.orcamentoForm.controls['modelo'].enable();
+            })
+    }
 
-	setValue(id: string) {
-		this.newService = id === '99';
+    addService(form: IOrcamentoForm) {
+        // if (form.outros) {
+        // 	const servico = {
+        // 		nome: form.outros,
+        // 		valor: form.valor,
+        // 	};
+        // 	this.osServicesNew.saveService(servico)
+        // 		.subscribe((res) => {
+        // 			console.log(res);
+        // 		})
+        // } else {
+        const s = {
+            ServicoId: form.servico,
+            DescricaoServico: form.pecas,
+            ValorServico: form.valor,
+        };
+        this.servicesAdded.push(s);
+        // }
+    }
 
-		const valor = this.services.find(f => f.id == parseInt(id)).valor;
-		this.orcamentoForm.controls['valor'].patchValue(valor);
-	}
+    hasServices(form: IOrcamentoForm): boolean {
+        return !!(form.servico && form.valor && form.pecas);
+    }
 
-	// saveService(ctrl: string) {
-	// 	console.log(this.orcamentoForm.controls[ctrl].value);
-	// }
+    serviceName(id): string {
+        return this.services.find(f => f.id == id).nome;
+    }
 
-	getCliente(cpfcnpj: string) {
-		this.readonly = false;
-		const document: string = this.orcamentoForm.controls[cpfcnpj].value;
-		this.osServicesNew.getCliente(document)
-			.subscribe(cliente => {
-				if (cliente) {
-					this.setClient(cliente);
-					this.readonly = true;
-				}
-			}, (err) => {
-				this.setClient(err);
-				this.readonly = false;
-			})
-	}
+    removeItem(index: number) {
+        this.servicesAdded.splice(index, 1);
+    }
 
-	saveOS(form: IOrcamentoForm) {
-		this.submitting = true;
-		const carro = {
-			marca: this.vehiclesBrands.find(f => f.codigo == form.marca).nome,
-			modelo: this.vehiclesName.find(f => f.codigo == form.modelo).nome,
-		};
-		const order = new OrcamentoForm(form, this.servicesAdded, carro);
-		this.osServicesNew.saveOsService(order)
-			.subscribe((res) => {
-				if (res.referencia) {
-					this.toastr.success(`Número da OS: ${res.referencia}`, 'Sucesso');
-					this.submitting = false;
-				}
-				this.createForm();
-				this.readonly = false;
-				this.servicesAdded = [];
-			}, (err) => {
-				this.toastr.error(`Parece que houve um erro ... `, 'Ops');
-			});
-	}
+    setValue(id: string) {
+        this.newService = id === '99';
+
+        const valor = this.services.find(f => f.id == parseInt(id)).valor;
+        this.orcamentoForm.controls['valor'].patchValue(valor);
+    }
+
+    // saveService(ctrl: string) {
+    // 	console.log(this.orcamentoForm.controls[ctrl].value);
+    // }
+
+    getCliente(cpfcnpj: string) {
+        this.readonly = false;
+        const document: string = this.orcamentoForm.controls[cpfcnpj].value;
+        this.osServicesNew.getCliente(document)
+            .subscribe(cliente => {
+                if (cliente) {
+                    this.setClient(cliente);
+                    this.readonly = true;
+                }
+            }, (err) => {
+                this.setClient(err);
+                this.readonly = false;
+            })
+    }
+
+    saveOS(form: IOrcamentoForm) {
+        this.submitting = true;
+        const carro = this.setCarro(form);
+        const order = new OrcamentoForm(form, this.servicesAdded, carro);
+        this.osServicesNew.saveOsService(order)
+            .subscribe((res) => {
+                if (res.referencia) {
+                    this.toastr.success(`Número da OS: ${res.referencia}`, 'Sucesso');
+                    this.submitting = false;
+                }
+                this.readonly = false;
+                this.servicesAdded = [];
+            }, (err) => {
+                this.toastr.error(`Parece que houve um erro ... `, 'Ops');
+            }, () => {
+                this.osServicesNew.clearPreOrdem();
+                this.osServicesNew.deletePreOrdem(this.preOrdem.id);
+                this.createForm();
+                this.preOrdem = undefined;
+            });
+    }
+
+    setCarro(form: IOrcamentoForm) {
+        if (this.preOrdem) {
+            return {
+                marca: this.preOrdem.carro.marca,
+                model: this.preOrdem.carro.modelo,
+            }
+        } else {
+            return {
+                marca: this.vehiclesBrands.find(f => f.codigo == form.marca).nome,
+                modelo: this.vehiclesName.find(f => f.codigo == form.modelo).nome,
+            }
+        }
+    }
 
 
-	isValid(input: string): boolean {
-		const field = this.orcamentoForm.controls[input];
-		return field.valid && (field.touched || field.dirty);
-	}
+    isValid(input: string): boolean {
+        const field = this.orcamentoForm.controls[input];
+        return field.valid && (field.touched || field.dirty);
+    }
 
-	isInvalid(input: string): boolean {
-		const field = this.orcamentoForm.controls[input];
-		return field.invalid && (field.touched || field.dirty);
-	}
+    isInvalid(input: string): boolean {
+        const field = this.orcamentoForm.controls[input];
+        return field.invalid && (field.touched || field.dirty);
+    }
 
-	fieldLen(f: string): number {
-		return this.orcamentoForm.controls[f].value.length;
-	}
+    fieldLen(f: string): number {
+        return this.orcamentoForm.controls[f].value.length;
+    }
 
 
-	documentDomainValidator(control: FormControl) {
-		return utils.validateDocument(control.value) ?
-			{ docInvalid: true } : null;
-	}
+    documentDomainValidator(control: FormControl) {
+        return utils.validateDocument(control.value) ?
+            { docInvalid: true } : null;
+    }
 
-	private setClient(cliente: ClienteResponse) {
-		if (cliente) {
-			this.orcamentoForm.controls['nome'].patchValue(cliente.nome);
-			this.orcamentoForm.controls['email'].patchValue(cliente.email);
-			this.orcamentoForm.controls['fone'].patchValue(cliente.telefone);
-		} else {
-			this.orcamentoForm.controls['nome'].patchValue('');
-			this.orcamentoForm.controls['email'].patchValue('');
-			this.orcamentoForm.controls['fone'].patchValue('');
-		}
-	}
+    private setClient(cliente: ClienteResponse) {
+        if (cliente) {
+            this.orcamentoForm.controls['nome'].patchValue(cliente.nome);
+            this.orcamentoForm.controls['email'].patchValue(cliente.email);
+            this.orcamentoForm.controls['fone'].patchValue(cliente.telefone);
+        } else {
+            this.orcamentoForm.controls['nome'].patchValue('');
+            this.orcamentoForm.controls['email'].patchValue('');
+            this.orcamentoForm.controls['fone'].patchValue('');
+        }
+    }
 
 }
