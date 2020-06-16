@@ -1,6 +1,7 @@
 import { PreOrdemResponse } from './pre-ordem.response';
 
 export class PreOrdemModel {
+    carroId: number;
     id: number;
     referencia: string;
     carro: CarroPre;
@@ -12,6 +13,7 @@ export class PreOrdemModel {
     data: string;
 
     constructor(preOrdem: PreOrdemResponse) {
+        this.carroId = preOrdem.carroId;
         this.id = preOrdem.id;
         this.data = preOrdem.dataAbertura;
         this.referencia = preOrdem.referencia;

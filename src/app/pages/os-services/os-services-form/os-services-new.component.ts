@@ -217,11 +217,13 @@ export class OsServicesNewComponent implements OnInit, OnDestroy {
             return {
                 marca: this.preOrdem.carro.marca,
                 model: this.preOrdem.carro.modelo,
+                id: this.preOrdem.carroId,
             }
         } else {
             return {
                 marca: this.vehiclesBrands.find(f => f.codigo == form.marca).nome,
                 modelo: this.vehiclesName.find(f => f.codigo == form.modelo).nome,
+                id: null,
             }
         }
     }

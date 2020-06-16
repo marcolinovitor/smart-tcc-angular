@@ -101,6 +101,7 @@ export class SolicitacaoComponent implements OnInit {
             }, (err) => {
                 console.log(err);
             }, () => {
+                this.showMsg = false;
                 this.scrollCol();
             });
     }
