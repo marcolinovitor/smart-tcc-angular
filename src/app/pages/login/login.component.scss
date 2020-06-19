@@ -10,7 +10,7 @@
 
 .container-fluid {
     /* The image used */
-  background-image: url("../../../assets/img/menu/workshop-1719872_1920.jpg");
+    background: linear-gradient(to bottom, rgb(0, 19, 54), rgb(0, 58, 167));
 
   /* Full height */
   height: 100%; 
@@ -23,4 +23,9 @@
   .row {
       height: 100vh;
   }
+}
+
+.row-img {
+    display: flex;
+    justify-content: center;
 }
