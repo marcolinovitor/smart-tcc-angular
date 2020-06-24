@@ -3,6 +3,9 @@ import { trigger, state, transition, style, animate, keyframes } from '@angular/
 import { IOrcamentoList, Servico } from '../../orcamento/orcamento-list/contract/orcamento-list.interface';
 import { DashboardService } from './dashboard.service';
 import { utils } from '../../../shared/utils/utils';
+import { SignalRService } from 'src/app/shared/signalr/signal-r.service';
+import { HttpClient } from '@angular/common/http';
+import { urls } from 'src/environments/urls';
 
 @Component({
 	selector: 'app-dashboard',
@@ -33,12 +36,13 @@ export class DashboardComponent implements OnInit {
 	submitting: boolean;
 
 	constructor(
-		private dashboardService: DashboardService
+        private dashboardService: DashboardService,
 	) { }
 
 	ngOnInit() {
 		this.getAllOrders();
-	}
+    }
+
 
 	getAllOrders() {
 		this.dashboardService.getOrcamentos()

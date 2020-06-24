@@ -4,5 +4,6 @@ export const urls = {
     },
     smart: {
         api: 'https://fatecoficinaapi.azurewebsites.net/api',
+        hub: 'https://fatecoficinaapi.azurewebsites.net/hub',
     }
 };
