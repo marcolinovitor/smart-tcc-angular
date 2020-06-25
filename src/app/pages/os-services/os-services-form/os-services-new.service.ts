@@ -121,7 +121,7 @@ export class OsServicesNewService {
 
     private createRequest(form: OrcamentoForm): Request {
         return {
-            CarroId: form.carroId,
+            CarroId: 0,
             Aprovacao: false,
             ProblemaRelatado: form.relatado,
             ProblemaDescrito: form.diagnosticado,
