@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ListMenu, AdminService } from './admin.service';
 import { SignalRService } from 'src/app/shared/signalr/signal-r.service';
 import { trigger, state, transition, style, animate, keyframes } from '@angular/animations';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-admin',
@@ -33,15 +34,9 @@ export class AdminComponent implements OnInit {
     constructor(
         private adminService: AdminService,
         private signalRService: SignalRService,
+        private toastr: ToastrService
     ) {
-        if (this.isAdmin()) {
-            this.signalRService.startHub();
-            this.signalRService.startConn();
-
-            this.signalRService.novasOrdens.subscribe((nova) => {
-                this.novasSolicitacoes += nova;
-            })
-        }
+        this.notificacoes();
         this.userDescription = this.adminService.profileDescription();
     }
 
@@ -79,4 +74,17 @@ export class AdminComponent implements OnInit {
         return this.adminService.isAdmin();
     }
 
+    private notificacoes() {
+        if (this.isAdmin()) {
+            this.signalRService.startHub();
+            this.signalRService.startConn();
+
+            this.signalRService.novasOrdens.subscribe((nova) => {
+                this.novasSolicitacoes += nova;
+            });
+            this.signalRService.novaAprovacao.subscribe(aprovacao => {
+                this.toastr.success(aprovacao, 'Novo', { disableTimeOut: true });
+            });
+        }
+    }
 }

@@ -37,7 +37,10 @@ export class DashboardComponent implements OnInit {
 
 	constructor(
         private dashboardService: DashboardService,
-	) { }
+        private signalRService: SignalRService,
+	) {
+        this.notificacao();
+    }
 
 	ngOnInit() {
 		this.getAllOrders();
@@ -89,6 +92,12 @@ export class DashboardComponent implements OnInit {
 
 	status(id: number) {
 		return utils.statusOs(id);
-	}
+    }
+    
+    private notificacao() {
+        this.signalRService.novaAprovacao.subscribe(aprovado => {
+            this.getAllOrders();
+        });
+    }
 
 }
