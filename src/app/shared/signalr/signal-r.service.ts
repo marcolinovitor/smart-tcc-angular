@@ -30,14 +30,14 @@ export class SignalRService {
 
     public ordersNotification = () => {
         this.hubConnection.on('ReceberInsercaoOrcamento', (notification) => {
-            console.log(notification);
+            // console.log(notification);
             this.novasOrdens.emit(1);
         });
     }
 
     public aproverNotification = () => {
         this.hubConnection.on('ReceberOSStatus', (aproved) => {
-            console.log(aproved);
+            // console.log(aproved);
             this.novaAprovacao.emit(aproved);
         });
     }

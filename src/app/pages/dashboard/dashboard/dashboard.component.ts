@@ -56,10 +56,6 @@ export class DashboardComponent implements OnInit {
 			})
 	}
 	
-	// verServicos(servicos: Servico[]) {
-		
-	// 	console.log(servicos);
-	// }
 
 	atualizarStatus(i: number, status: number) {
 		this.change(i);
