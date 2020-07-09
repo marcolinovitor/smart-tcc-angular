@@ -8,6 +8,7 @@ export interface IOrcamentoList {
   carro: Carro;
   servicos: Servico[];
   id: number;
+  dataAbertura: string;
   updating?: boolean;
 }
 
